@@ -1,0 +1,223 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+*{
+  font-family: 'Poppins', sans-serif;
+  margin:0; padding:0;
+  box-sizing: border-box;
+  outline: none; border:none;
+  text-transform: capitalize;
+  transition: all .2s linear;
+} */
+
+.shipping-container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  padding:25px;
+  min-height: 100vh;
+  /* background: linear-gradient(90deg, #2ecc71 60%, #27ae60 40.1%); */
+}
+
+.shipping-container form{
+  padding: 5px 20px 20px 20px;
+  width: 100%;
+  max-width:700px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+
+.shipping-container form .row{
+  display: flex;
+  flex-wrap: wrap;
+  gap:15px;
+}
+
+.shipping-container form .row .col{
+  flex:1 1 250px;
+  padding: 20px 5px 5px 5px;
+}
+
+.shipping-container form .row .col .title{
+  font-size: 20px;
+  color:#333;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.shipping-container form .row .col .inputBox{
+  margin:10px 0;
+}
+
+.shipping-container form .row .col .inputBox span{
+  margin-bottom: 5px;
+  display: block;
+}
+
+.shipping-container form .row .col .inputBox input{
+  width: 100%;
+  border:1px solid #ccc;
+  padding:10px 15px;
+  font-size: 15px;
+  text-transform: none;
+}
+
+.shipping-container form .row .col .inputBox input:focus{
+  border:1px solid #000;
+}
+
+.shipping-container form .row .col .flex{
+  display: flex;
+  gap:15px;
+}
+
+.shipping-container form .row .col .flex .inputBox{
+  margin-top: 5px;
+}
+
+.shipping-container form .row .col .inputBox img{
+  height: 34px;
+  margin-top: 5px;
+  filter: drop-shadow(0 0 1px #000);
+}
+
+.shipping-container form .save-btn,
+.shipping-container form .order-btn{
+  width: 100%;
+  padding:12px;
+  font-size: 17px;
+  background: #27ae60;
+  color:#fff;
+  margin-top: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.shipping-container form .save-btn:hover,
+.shipping-container form .order-btn:hover{
+  background: #2ecc71;
+}
+
+
+/* address-modal */
+#address-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+}
+
+#address-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+
+  width: 100%;
+  max-width: 480px;
+}
+
+.row.address {
+  gap: 5px;
+}
+.address-modal-content {
+  height: fit-content;
+}
+
+.address-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+}
+
+#open-ModalAddress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 700px;
+  height: 100px;
+
+  background-color: rgba(255,255,255,0.5);
+}
+
+#saveButton {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+/* .no-spin-cardnum::-webkit-inner-spin-button,
+.no-spin-cardnum::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+} */
+
+/* products css */
+.shiping-items {
+  width: 100%;
+}
+
+.shiping-items .cart-lists {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.shiping-items .cart-lists li {
+  padding: 10px;
+  background: rgba(0,0,0,0.06);
+}
+.shiping-items .cart-item .img-box  {
+  display: flex;
+
+  width: 100px;
+}
+.shiping-items .cart-item {
+  display: flex;
+  width: 100%;
+}
+
+.shiping-items .text-prod-infos {
+  display: flex;
+  justify-content: space-between;
+
+  flex-direction: column;
+  width: 100%;
+}
+.text-prod-infos .lower-part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.shipping-container .prod-total {
+  margin: 50px 0 20px 0;
+  text-align: left;
+  font-size: larger;
+  font-weight: 600;
+}
