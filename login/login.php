@@ -26,7 +26,7 @@
                 <div class="logo-title">
 
                 </div>
-                <form action="">
+                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
                     <h1>Create account</h1>
                     <div class="social-icons">
                         <a href="">
