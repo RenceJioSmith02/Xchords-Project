@@ -45,7 +45,7 @@
 
           <div class="welcome-content">
 
-            <p class="welcome-subtitle">Play Everyday</p>
+            <p class="welcome-subtitle">Play Everynight</p>
 
             <h2 class="h1 welcome-title">Shop Guitars Online</h2>
 
