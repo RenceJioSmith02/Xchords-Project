@@ -308,13 +308,13 @@
                                     <td><?php echo $row['Pdescription'] ?></td>
                                     <td>
                                         
-                                        <a href="view-specs.php?id=<?php echo $row['PID'] ?>">View</a>
+                                        <a href="view-specs.php?id=<?php echo $row['PID'] ?>"><ion-icon name="eye-outline"></a>
 
                                     </td>
                                     <td><img src="<?php echo $row['Pimage'] ?>" alt="Product Image" style="max-width: 100px;"></td>
                                     <td>
-                                        <a href="update-product.php?id=<?php echo $row['PID'] ?>">Edit</a>
-                                        <a href="table.php?deleteid=<?php echo $row['PID'] ?>" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                                        <a href="update-product.php?id=<?php echo $row['PID'] ?>"><ion-icon name="create-outline"></a>
+                                        <a href="table.php?deleteid=<?php echo $row['PID'] ?>" onclick="return confirm('Are you sure you want to delete this product?')"><ion-icon name="trash"></ion-icon></a>
                                     </td>
                                 </tr>
                             <?php } ?>
