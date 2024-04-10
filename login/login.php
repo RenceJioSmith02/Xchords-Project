@@ -26,7 +26,7 @@
                 <div class="logo-title">
 
                 </div>
-                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+                <form action="<?php $_SERVER['PHP_SELF'] ?>">
                     <h1>Create account</h1>
                     <div class="social-icons">
                         <a href="">
@@ -42,10 +42,10 @@
                     <span>
                         or use your email for registration
                     </span> 
-                    <input type="text" placeholder="Name" required />
-                    <input type="email" placeholder="Email" required />
-                    <input type="password" placeholder="Password" required/>
-                    <button>Sign Up</button>
+                    <input type="text" name="name" placeholder="Name" required />
+                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="password" name="password" placeholder="Password" required/>
+                    <button type="submit" name="signup">Sign Up</button>
                 </form>
             </div>
     

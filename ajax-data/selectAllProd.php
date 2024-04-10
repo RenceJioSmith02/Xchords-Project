@@ -6,9 +6,9 @@
         if (isset($_POST['filterValue'])) {
             $filterValue = $_POST['filterValue'];
             $query = "SELECT * FROM `products`
-                     INNER JOIN `category`
-                     ON category.CID = products.CID
-                     WHERE category.CID = '$filterValue'";
+                    INNER JOIN `category`
+                    ON category.CID = products.CID
+                    WHERE category.CID = '$filterValue'";
         } elseif (isset($_POST['input'])) {
         
             $input = $_POST['input'];
