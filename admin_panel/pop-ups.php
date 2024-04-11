@@ -26,7 +26,7 @@
             $fileName = $uploadedFiles["name"];
             $fileSize = $uploadedFiles["size"];
             $tempName = $uploadedFiles["tmp_name"];
-    
+
             $validImgExtension = ['jpg', 'jpeg', 'png'];
             $imgExtension = explode(".", $fileName);
             $imgExtension = strtolower(end($imgExtension));
