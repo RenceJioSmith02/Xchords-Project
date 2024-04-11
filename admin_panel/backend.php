@@ -44,7 +44,7 @@
 
                     break;
                 case 'orders':
-                    $sql = "SELECT o.orderID, p.PID, a.name, p.Pname, o.quantity , p.Pprice 
+                    $sql = "SELECT o.orderID, p.PID, a.name, p.Pname, c.quantity , p.Pprice 
                     FROM orders AS o
                         JOIN accounts AS a ON o.accountID = a.accountID
                             JOIN cart as c ON c.accountID = a.accountID
