@@ -1,19 +1,10 @@
 
 <!--  #HEADER -->
 <?php
- 
- session_start();
-
- require_once 'database.php';
- $database = new Database();
- $connection = $database->getConnection();
-
-//  include 'cartData.php';
- 
- $toSearch = "";
-  if (isset($_GET['search'])) {
-    $toSearch = $_GET['search'];
-  }   
+  $toSearch = "";
+    if (isset($_GET['search'])) {
+      $toSearch = $_GET['search'];
+    }   
 
 ?>
 

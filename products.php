@@ -1,4 +1,5 @@
 <?php
+  session_start();
 
   if (isset($_GET['btnProductId'])) {
     $productId = $_GET['btnProductId'];
@@ -31,7 +32,7 @@
   <!-- #HEADER -->
   
   <?php include 'header&footer/header.php'; ?>
-  <?php include 'login/login.html'; ?>
+  <?php include 'login/login.php'; ?>
 
 
     <!-- #PRODUCT-->
