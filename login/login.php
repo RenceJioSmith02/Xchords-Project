@@ -26,11 +26,8 @@
                 <div class="logo-title">
 
                 </div>
-<<<<<<< HEAD:login/login.php
+
                 <form action="<?php $_SERVER['PHP_SELF'] ?>">
-=======
-                <form action="">
->>>>>>> parent of e0c035b (change file extension):login/login.html
                     <h1>Create account</h1>
                     <div class="social-icons">
                         <a href="">
