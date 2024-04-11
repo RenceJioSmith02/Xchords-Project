@@ -142,12 +142,12 @@
                   <tbody id="results">
                     
                   <?php
-                                                  // $row = mysqli_fetch_assoc($rows);
-                                                  // if($row != null) {
-                                                  //     echo "may laman naman";
-                                                  // }else {
-                                                  //     echo"wala";
-                                                  // }
+                                                  $row = mysqli_fetch_assoc($rows);
+                                                  if($row != null) {
+                                                      echo "may laman naman";
+                                                  }else {
+                                                      echo"wala";
+                                                  }
 
                   while ($row = mysqli_fetch_assoc($rows)){  ?>
                         <tr>
