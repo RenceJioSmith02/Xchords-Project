@@ -81,7 +81,7 @@
 
                 </div>
 
-                <form action="<?php $_SERVER['PHP_SELF'] ?>">
+                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
                     <h1>Create account</h1>
                     <div class="social-icons">
                         <a href="">
