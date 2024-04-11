@@ -51,10 +51,9 @@
                             JOIN products AS p ON  c.PID = p.PID
                                  ORDER BY o.productID ASC LIMIT  ?, ?";
                     break;
-                case 'sales':
-                    $sql = "SELECT * FROM " . $tablename . " AS s JOIN accounts AS a ON s.salesID = a.accountID 
-                    JOIN products AS p ON s.productID = p.PID 
-                    ORDER BY " . $primarykey . " ASC LIMIT  ?, ?";
+                case 'sales': 
+                    $sql = "SELECT * FROM sales
+                    ORDER BY salesID ASC LIMIT  ?, ?";
                     break;
                 case 'accounts':
                     $sql = "SELECT * FROM " . $tablename . " ORDER BY " . $primarykey . " ASC LIMIT  ?, ?";

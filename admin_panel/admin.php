@@ -142,20 +142,20 @@
                   <tbody id="results">
                     
                   <?php
-                                                  $row = mysqli_fetch_assoc($rows);
-                                                  if($row != null) {
-                                                      echo "may laman naman";
-                                                  }else {
-                                                      echo"wala";
-                                                  }
+                                                  // $row = mysqli_fetch_assoc($rows);
+                                                  // if($row != null) {
+                                                  //     echo "may laman naman";
+                                                  // }else {
+                                                  //     echo"wala";
+                                                  // }
 
                   while ($row = mysqli_fetch_assoc($rows)){  ?>
                         <tr>
                             <td><?php echo ++$count ?></td>
-                            <td><?php echo $row['name'] ?></td>
+                            <td><?php echo $row['Cname'] ?></td>
                             <td><?php echo $row['Pname'] ?></td>
                             <td><?php echo $row['quantity'] ?></td>
-                            <td><?php echo $row['price'] ?></td>
+                            <td><?php echo $row['Pprice'] ?></td>
                             <td><?php echo $row['delivered'] ?></td>
                         </tr>
                     <?php } ?>
