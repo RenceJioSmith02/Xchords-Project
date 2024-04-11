@@ -1,3 +1,57 @@
+<?php
+    require_once "./admin_panel/backend.php";
+
+    $connect = new Connect_db();
+    $query = new Queries($connect);
+
+
+    if (isset($_POST['signin'])) {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+
+        $query = new AccountLogin($connect, $email, $password);
+        $result = $query->loginAccount();
+
+        if ($result) {
+            $row = $result;
+            $_SESSION['email'] = $row['email'];
+            $role = $row['role'];
+
+            if ($role === 0) {
+                $_SESSION['type'] = "admin";
+                header("Location: ./admin_panel/admin.php");
+            }else{
+                $_SESSION['type'] = 'user';
+                header("Location: index.php?success=login_success");
+            }
+        }else {
+            echo "<script>alert('Invalid email or password!')</script>";
+        }
+    }
+
+    // sa kwan to e sign up
+        if (isset($_POST['signup'])) {
+            $name = $_POST["name"];
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+
+            $query = new Accounts($connect,$name, $email, $password);
+
+            if ($query->checkIfUserExists()) {
+                header("Location: sign_in.php?error=email_exist");
+            }
+            else {
+                if ($query->createAccount() ) {
+                    header("Location: index.php?success=account_created");
+                }
+            }
+        }
+    
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +108,7 @@
                 <div class="logo-title">
 
                 </div>
-                <form action="">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <h1>Sign In</h1>
                     <div class="social-icons">
                         <a href="">
@@ -70,12 +124,12 @@
                     <span>
                         or use your email paswword
                     </span> 
-                    <input type="email" placeholder="Email" required />
-                    <input type="password" placeholder="Password" required/>
+                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="password" name="password" placeholder="Password" required/>
                     <a href="">
                         forgot your password?
                     </a>
-                    <button>Sign In</button>
+                    <button type="submit" name="signin">Sign In</button>
                 </form>
             </div>
     
