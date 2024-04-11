@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +30,7 @@
   <!-- #HEADER -->
 
   <?php include 'header&footer/header.php'; ?>
-  <?php include 'login/login.php'; ?>
+  <?php include 'login/login.html'; ?>
 
 
   <main>
@@ -137,32 +136,27 @@
           <ul class="product-list">
 
           <?php
-                
-            if (isset($_POST['filterValue'])) {
-              $filterValue = $_POST['filterValue'];
-              $query = "SELECT * FROM `products`
-                      INNER JOIN `category`
-                      ON category.CID = products.CID
-                      WHERE category.CID = ?";
-              $stmt = $connect->prepare($query);
-              $stmt->bind_param('i', $filterValue);
-              $stmt->execute();
-            } elseif (isset($_POST['input'])) {
-                $input = $_POST['input'];
-                $query = "SELECT * FROM `products` WHERE `Pname` LIKE ?";
-                $stmt = $connect->prepare($query);
-                $input = "%$input%";
-                $stmt->bind_param('s', $input);
-                $stmt->execute();
-            } else {
-                $query = "SELECT * FROM `products`";
-                $stmt = $connect->prepare($query);
-                $stmt->execute();
-            }
-            
-            $stmt->execute();
-            $result = $stmt->get_result();
 
+            $database = new Database();
+            $connection = $database->getConnection();
+                
+                if (isset($_POST['filterValue'])) {
+                    $filterValue = $_POST['filterValue'];
+                    $query = "SELECT * FROM `products`
+                            INNER JOIN `category`
+                            ON category.CID = products.CID
+                            WHERE category.CID = '$filterValue'";
+                } elseif (isset($_POST['input'])) {
+                
+                    $input = $_POST['input'];
+
+                    $query = "SELECT * FROM `products` WHERE `Pname` LIKE '%$input%'";
+                    $result = mysqli_query($connection, $query);
+                } else {
+                    $query = "SELECT * FROM `products`";
+                }
+
+                $result = mysqli_query($connection, $query);
 
                 if (mysqli_num_rows($result) > 0) {
                     for ($i = 0; $i < 6 && $row = mysqli_fetch_assoc($result); $i++) {
