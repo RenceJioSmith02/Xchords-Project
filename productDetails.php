@@ -1,6 +1,8 @@
 <?php
 
-    include 'database.php';
+    session_start();
+
+    require_once 'database.php';
     $database = new Database();
     $connection = $database->getConnection();
 
@@ -44,6 +46,7 @@
 
     <!-- #HEADER -->
     <?php include 'header&footer/header.php'; ?>
+    <?php include 'login/login.php'; ?>
 
 
     <!-- #PRODUCT-->
@@ -64,10 +67,27 @@
                             <div class="box-detail image">
                                 <img src="relativeFiles/images/E-guitars/<?php echo $row['Pimage'] ?>" alt="guitar1" loading="guitar1" class="img">
                                 <div class="box-specs">
-                                    <button class="btn btn-outline add-to-cart">
+                                    <button class="">
                                         <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                                         <p>Add to Cart</p>
                                     </button>
+
+
+                                    <!-- cart btn -->
+                                    <button 
+                                    <?php 
+                                        if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+                                            echo "class='btn btn-outline add-to-cart'";
+                                        } else {
+                                            echo "class='btn btn-outline' onclick='trylang()'";
+                                        }
+                                    ?>
+                                    >
+                                        <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+
+                                        <p>Add to Cart</p>
+                                    </button>
+
                                 </div>
                             </div>
                             <div class="box-detail specs">
@@ -127,7 +147,6 @@
 
     <!-- footer -->
     <?php include 'header&footer/footer.html'; ?>
-
 
 
       <!-- ajax -->

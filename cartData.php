@@ -18,13 +18,13 @@
     }
 
     function addtoCart($productName, $connection) {
-
-        // ok
-        $query = "SELECT p.Pname, cartID, quantity 
+        $query = "SELECT p.* , c.* 
                     FROM `cart` as c
-                    INNER JOIN  products as p
-                    ON c.PID=p.PID
-                    WHERE p.Pname = '$productName'";
+                    INNER JOIN products as p
+                    ON c.PID = p.PID
+                    WHERE p.Pname = '$productName' AND c.accountID = '".$_SESSION['UID']."'";
+        
+        echo $query;
                     
         $result = mysqli_query($connection, $query);
         $row = mysqli_fetch_assoc($result);
@@ -33,15 +33,22 @@
             $Updated_quantity = $row["quantity"] + 1;
 
             // ok
-            $query = "UPDATE `cart` SET `quantity`='$Updated_quantity' WHERE cartID = '".$row['cartID']."'";
+            $query = "UPDATE `cart` SET `quantity`='$Updated_quantity' WHERE PID = '".$row['PID']."' AND accountID = '".$_SESSION['UID']."'";
             mysqli_query($connection, $query);
 
         } else {
+
+            $query = "SELECT *
+            FROM products
+            WHERE Pname = '$productName'";
+                        
+            $result = mysqli_query($connection, $query);
+            $row = mysqli_fetch_assoc($result);
+
             // ok
-            $query = "INSERT INTO cart (PID, quantity)
-            SELECT PID, 1
-            FROM products as p
-            WHERE p.Pname = '$productName'";
+            $query = "INSERT INTO `cart`(`cartID`, `PID`, `quantity`, `accountID`) 
+            VALUES 
+            (null,'".$row['PID']."', 1, '".$_SESSION['UID']."')";
         }
 
         mysqli_query($connection, $query);
@@ -50,20 +57,28 @@
     function deletetoCart($DeleteProductName, $connection) {
         
         // ok
-        $query = "SELECT PID FROM `products` WHERE Pname = '$DeleteProductName'";
+        $query = "SELECT p.PID
+                    FROM `products` as p
+                    INNER JOIN cart as c
+                    ON p.PID = c.PID
+                    WHERE p.Pname = '$DeleteProductName' AND c.accountID = '".$_SESSION['UID']."'";
+        
+        // echo $query;
+
         $result = mysqli_query($connection, $query);
         $row = mysqli_fetch_assoc($result);
 
         $PID = $row['PID'];
 
-        $query = "DELETE FROM `cart` WHERE PID = '$PID'";
+        $query = "DELETE FROM `cart` WHERE PID = '$PID' AND accountID = '".$_SESSION['UID']."'";
         mysqli_query($connection, $query);
     }
-        // ok
-        $query = "SELECT c.cartID, p.Pname, p.Pprice, p.Pimage, c.quantity
+
+        $query = "SELECT p.*, c.* 
                     FROM `cart` as c
-                    INNER JOIN `products` AS p
-                    ON p.PID=c.PID";
+                    INNER JOIN products as p
+                    ON c.PID = p.PID
+                    WHERE c.accountID = '".$_SESSION['UID']."'";
 
         $result = mysqli_query($connection, $query);
         $num_rows = mysqli_num_rows($result);
@@ -101,7 +116,8 @@
                 $query = "SELECT SUM(p.Pprice * c.quantity) AS total 
                         FROM cart as c
                         INNER JOIN products as p
-                        ON p.PID = c.PID";
+                        ON p.PID = c.PID
+                        WHERE c.accountID = '".$_SESSION['UID']."'";
                         
                 $result = mysqli_query($connection, $query);
                 $row = mysqli_fetch_assoc($result);

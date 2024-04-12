@@ -1,5 +1,7 @@
 <?php
 
+  session_start();
+
   if (isset($_GET['btnProductId'])) {
     $productId = $_GET['btnProductId'];
   }
@@ -69,7 +71,6 @@
 
       <!-- footer -->
       <?php include 'header&footer/footer.html'; ?>
-
 
 
 

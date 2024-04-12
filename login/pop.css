@@ -10,13 +10,14 @@
     background: transparent;
     transition: opacity 200ms ease-out, 
                 transform 200ms ease-out;
-    z-index: 99;
+    z-index: -1;
 }
 .pop-up.login.active{
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
     transition: opacity 200ms ease-in-out, 
                 transform 200ms ease-in-out;
+    z-index: 99;
 }
 
 .pop-up.login .close-btn,

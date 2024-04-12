@@ -22,6 +22,7 @@
                 header("Location: ./admin_panel/admin.php");
             }else{
                 $_SESSION['type'] = 'user';
+                $_SESSION['UID'] = $row['accountID'];
                 header("Location: index.php?success=login_success");
             }
         }else {

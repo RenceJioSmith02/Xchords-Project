@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     include '../database.php';
     $database = new Database();
     $connection = $database->getConnection();
@@ -47,7 +49,16 @@
                             <ion-icon name="eye-outline"></ion-icon>
                             </button>
 
-                            <button class="card-action-btn cart-btn add-to-cart">
+                            <!-- cart btn -->
+                            <button 
+                            <?php 
+                                if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+                                    echo "class='card-action-btn cart-btn add-to-cart'";
+                                } else {
+                                    echo "class='card-action-btn cart-btn' onclick='trylang()'";
+                                }
+                            ?>
+                            >
                                 <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
 
                                 <p>Add to Cart</p>

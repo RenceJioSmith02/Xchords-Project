@@ -39,29 +39,47 @@
 
       <div class="header-actions">
 
-        <button class="header-action-btn" id="show-login">
-          <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+        <!-- <div class="account-option">
 
-          <p class="header-action-label">Sign in</p>
-        </button>
 
-        <button class="header-action-btn" id="show-cart">
-          <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
 
-          <p class="header-action-label">Cart</p>
+        </div> -->
 
-          <!-- <?php
-            if (isset( $_SESSION["numberofitems"])) {
-              echo "<div class='btn-badge green' aria-hidden='true' id='numCarts'>";
-                echo $_SESSION['numberofitems'];
-              echo "</div>";
+        <button class="header-action-btn" id="<?php echo (isset($_SESSION['type']) && $_SESSION['type'] == 'user') ? "account-setting" : "show-login1"; ?>
+">
+          
+          <?php 
+            if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+              echo "<ion-icon name='person-circle-outline'></ion-icon>
+                <p class='header-action-label'>Account</p>";
+            } else {
+              echo "<ion-icon name='person-outline'></ion-icon>
+              <p class='header-action-label'>Sign In</p>";
             }
-          ?> -->
-          <div class="btn-badge green" id="numCarts">
-            
-          </div>
+          ?>
 
         </button>
+        
+        <?php if (isset($_SESSION['type'])) { ?>
+          <button class="header-action-btn" id="show-cart">
+            <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
+
+            <p class="header-action-label">Cart</p>
+
+            <!-- <?php
+              if (isset( $_SESSION["numberofitems"])) {
+                echo "<div class='btn-badge green' aria-hidden='true' id='numCarts'>";
+                  echo $_SESSION['numberofitems'];
+                echo "</div>";
+              }
+            ?> -->
+
+            <div class="btn-badge green" id="numCarts">
+              
+            </div>
+
+          </button>
+        <?php } ?>
 
 
       </div>
