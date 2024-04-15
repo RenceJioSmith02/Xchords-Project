@@ -107,7 +107,7 @@
                                 <h3>Specification</h3>
                                 <ul>
                                     <li>
-                                        <strong>Body Type:</strong>
+                                        <strong>Body Material:</strong>
                                         <p>GA Cutaway</p>
                                     </li>
                                     <li>
@@ -115,7 +115,7 @@
                                         <p>Satin</p>
                                     </li>
                                     <li>
-                                        <strong>Body Color:</strong>
+                                        <strong>Number of Frets:</strong>
                                         <p>Natural</p>
                                     </li>
                                     <li>

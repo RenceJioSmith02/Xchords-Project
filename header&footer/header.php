@@ -13,7 +13,7 @@
   $toSearch = "";
   if (isset($_GET['search'])) {
     $toSearch = $_GET['search'];
-  }   
+  }
 
 ?>
 
@@ -23,8 +23,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+  <!-- Include SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </head>
 <body>
+
+  <!-- Include SweetAlert2 library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <header class="header" data-header>
     <div class="container">
@@ -38,16 +45,7 @@
       <!-- search here dati -->
 
       <div class="header-actions">
-
-        <!-- <div class="account-option">
-
-
-
-        </div> -->
-
-        <button class="header-action-btn" id="<?php echo (isset($_SESSION['type']) && $_SESSION['type'] == 'user') ? "account-setting" : "show-login1"; ?>
-">
-          
+        <button class="header-action-btn" <?php echo (isset($_SESSION['type']) && $_SESSION['type'] == 'user') ? "onclick=\"openPopup('accountSetting')\"" : "id='show-login1'"; ?>">
           <?php 
             if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
               echo "<ion-icon name='person-circle-outline'></ion-icon>
@@ -57,21 +55,20 @@
               <p class='header-action-label'>Sign In</p>";
             }
           ?>
-
         </button>
         
-        <?php if (isset($_SESSION['type'])) { ?>
+        <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') { ?>
           <button class="header-action-btn" id="show-cart">
             <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
 
             <p class="header-action-label">Cart</p>
 
             <!-- <?php
-              if (isset( $_SESSION["numberofitems"])) {
-                echo "<div class='btn-badge green' aria-hidden='true' id='numCarts'>";
-                  echo $_SESSION['numberofitems'];
-                echo "</div>";
-              }
+              // if (isset( $_SESSION["numberofitems"])) {
+              //   echo "<div class='btn-badge green' aria-hidden='true' id='numCarts'>";
+              //     echo $_SESSION['numberofitems'];
+              //   echo "</div>";
+              // }
             ?> -->
 
             <div class="btn-badge green" id="numCarts">
@@ -154,6 +151,29 @@
             <a href="#" class="navbar-link">Contact</a>
           </li>
 
+            <div class="account-option"  id="accountOption"> 
+            
+                <div class="account-btn">
+                  <i class='bx bx-receipt'></i>
+                  <button onclick="openPopup('orders')">Orders</button>
+                </div>
+
+                <div class="account-btn">
+                  <i class='bx bx-log-out'></i>
+                  <button onclick="openPopup('logout')">Logout</button>
+                </div>
+
+                <div id="popup" class="popup">
+                  <h2>orders</h2>
+                  <p>order 1</p>
+                  <button onclick="closePopup()">Close</button>
+                </div>
+
+                <div id="overlay" class="overlay"></div>
+
+            </div>
+
+
         </ul>
 
       </nav>
@@ -162,6 +182,47 @@
   </header>
 
 
+
+  <script>
+    function openPopup(action) {
+      var title, content;
+      if (action === 'orders') {
+        
+
+        // document.getElementById('popupTitle').innerText = title;
+        // document.getElementById('popupContent').innerText = content;
+        
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+
+      } else if (action === 'logout') {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout!'
+
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href='<?php echo "index.php?logout=true"?>';
+              //alert("Logout successful!"); // For demonstration, you can replace this with actual logout action
+            }
+          })
+      } else if (action = 'accountSetting') {
+        document.getElementById('accountOption').classList.toggle("active");
+      }
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+  </script>
+
+           
 </body>
 </html>
 

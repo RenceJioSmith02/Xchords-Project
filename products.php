@@ -2,6 +2,9 @@
 
   session_start();
 
+  include 'login/login.php'; 
+  include 'header&footer/header.php';
+
   if (isset($_GET['btnProductId'])) {
     $productId = $_GET['btnProductId'];
   }
@@ -29,12 +32,6 @@
 
 </head>
 <body>
-
-  <!-- #HEADER -->
-  
-  <?php include 'header&footer/header.php'; ?>
-  <?php include 'login/login.php'; ?>
-
 
     <!-- #PRODUCT-->
       <section class="section product">

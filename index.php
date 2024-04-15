@@ -2,6 +2,18 @@
 
   session_start();
 
+  // // sessions
+  // if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+  //   header("Location: index.php?success=login_success");
+  // }  elseif (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
+  //   header("Location: ./admin_panel/admin.php");
+  // }
+
+  if (isset( $_GET["logout"])) {
+    session_destroy();
+    header("Location: index.php");
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -29,15 +41,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
 
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <!-- Include SweetAlert2 library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
 <body>
 
-  <!-- #HEADER -->
-
-  <?php include 'header&footer/header.php'; ?>
-  <?php include 'login/login.php'; ?>
-
+  <?php 
+      include 'login/login.php'; 
+      include 'header&footer/header.php';
+  ?>
 
   <main>
     <article>

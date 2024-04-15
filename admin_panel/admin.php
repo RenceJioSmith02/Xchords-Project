@@ -43,7 +43,7 @@
 
   <!-- sidebar-header -->
   <?php include 'sidebar-header.php'; ?>
-
+  
   <section class="section-panel">
     <div class="section-content">
       
@@ -181,9 +181,6 @@
     
   <!-- side bar and pop-ups script -->
   <script src="../relativeFiles/js/admin-pop.js"></script>
-
-
-
 
     <!-- ionicons -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

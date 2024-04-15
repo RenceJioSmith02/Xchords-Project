@@ -49,39 +49,39 @@
                 <div class="row address">
                     <div class="col">
 
-                        <form action="" style="background: red;">
+                    <form action="" style="background: red;">
                         <h3 class="title">billing address</h3>
 
-                    <div class="inputBox">
-                        <span>full name :</span>
-                        <input type="text" placeholder="Rence Jio Bal-ot">
-                    </div>
-                    <div class="inputBox">
-                        <span>email :</span>
-                        <input type="email" placeholder="example@example.com">
-                    </div>
-                    <div class="inputBox">
-                        <span>address :</span>
-                        <input type="text" placeholder="room - street - locality">
-                    </div>
-                    <div class="inputBox">
-                        <span>city :</span>
-                        <input type="text" placeholder="Nueva Ecija">
-                    </div>
+                        <div class="inputBox">
+                            <span>full name :</span>
+                            <input type="text" placeholder="Rence Jio Bal-ot">
+                        </div>
+                        <div class="inputBox">
+                            <span>email :</span>
+                            <input type="email" placeholder="example@example.com">
+                        </div>
+                        <div class="inputBox">
+                            <span>address :</span>
+                            <input type="text" placeholder="room - street - locality">
+                        </div>
+                        <div class="inputBox">
+                            <span>city :</span>
+                            <input type="text" placeholder="Nueva Ecija">
+                        </div>
 
-                    <div class="flex">
-                        <div class="inputBox">
-                            <span>state :</span>
-                            <input type="text" placeholder="Philippines">
+                        <div class="flex">
+                            <div class="inputBox">
+                                <span>state :</span>
+                                <input type="text" placeholder="Philippines">
+                            </div>
+                            <div class="inputBox">
+                                <span>zip code :</span>
+                                <input type="text" placeholder="3119">
+                            </div>
                         </div>
-                        <div class="inputBox">
-                            <span>zip code :</span>
-                            <input type="text" placeholder="3119">
-                        </div>
-                    </div>
-                    
-                    <input type="submit" value="SAVE" name="save-btn" class="save-btn" id="save-btn"/>
-                        </form>
+                        
+                        <input type="submit" value="SAVE" name="save-btn" class="save-btn" id="save-btn"/>
+                    </form>
 
                     </div>
                 </div>
