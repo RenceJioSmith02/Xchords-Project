@@ -129,7 +129,7 @@ body {
 .container { padding-inline: 15px; }
 
 a,
-button { transition: var(--transition-1); }
+button { transition: var(--transition-1); color: white;}
 
 h3 > a { color: inherit; }
 
@@ -415,6 +415,8 @@ h3 > a { color: inherit; }
   color: var(--white);
 }
 
+
+
 .navbar-list > li:not(:last-child) { border-bottom: 1px solid var(--light-1); }
 
 .overlay {
@@ -546,7 +548,11 @@ h3 > a { color: inherit; }
   text-align: center;
 }
 
-.account-option {
+.setting-container {
+  display: block;
+  position: relative;
+}
+.setting-container .account-option {
   display: none;
   flex-direction: column;
   justify-content: space-around;
@@ -554,13 +560,15 @@ h3 > a { color: inherit; }
 
   width: 120px;
   height: 100px;
+  z-index: 13;
 
   position: absolute;
-  top: 35px;
-  right: 110px;
+  top: 220%;
+  right: -10%;
   transform: translate(-50%, -50%);
+
   color: var(--white);
-  padding: 20px;
+  padding: 20px 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   border: 1px solid var(--white);
@@ -571,18 +579,22 @@ h3 > a { color: inherit; }
 }
 .account-option button {
   color: white;
+  width: 100%;
+}
+.account-option button i{
+  margin: 0 10px;
 }
 
 
 /* account option*/
 
-.popup {
+.popup-order {
   display: none;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: black;
   padding: 20px;
   border: 1px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -1083,8 +1095,67 @@ h3 > a { color: inherit; }
 /**
  * responsive for larger than 992px screen
  */
+@media screen and (max-width: 992px) {
+  .setting-container .header-action-label.hide,
+  .setting-container ion-icon.hide {
+    display: none;
+  }
+
+    /* profile-sidebar */
+ .profile-details{
+  position: fixed;
+  bottom: 0;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: #141414;
+  padding: 12px 0;
+  transition: all 0.5s ease;
+  }
+  .profile-details .profile-content{
+    display: flex;
+    align-items: center;
+  }
+  li .profile-details .profile_name,
+  li .profile-details .job{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  li .profile-details button {
+    border: none;
+    background: none;
+  }
+  li i {
+    font-size: 30px;
+  }
+  .navbar-list li a {
+    font-size: 20px;
+  }
+  .navbar-list li a ion-icon {
+    display: inline-block;
+    margin: 0 15px;
+  }
+
+  .navbar-link,
+  .account-btn {
+    padding-block: 20px;
+  }
+
+}
+
 
 @media (min-width: 992px) {
+  li .account-btn,
+  li .profile-details {
+    display: none;
+  }
+  .navbar-list li a ion-icon {
+    display: none;
+  }
+
 
   /**
    * CUSTOM PROPERTY
@@ -1223,8 +1294,6 @@ h3 > a { color: inherit; }
   }
 
   .navbar-link:is(:hover, :focus) { color: #EE662c; }
-
-
 
   /**
    * CATEGORY

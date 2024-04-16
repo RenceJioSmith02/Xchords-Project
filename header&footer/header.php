@@ -27,6 +27,9 @@
   <!-- Include SweetAlert2 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+  <!-- Boxiocns CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body>
 
@@ -45,17 +48,30 @@
       <!-- search here dati -->
 
       <div class="header-actions">
-        <button class="header-action-btn" <?php echo (isset($_SESSION['type']) && $_SESSION['type'] == 'user') ? "onclick=\"openPopup('accountSetting')\"" : "id='show-login1'"; ?>">
-          <?php 
-            if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
-              echo "<ion-icon name='person-circle-outline'></ion-icon>
-                <p class='header-action-label'>Account</p>";
-            } else {
-              echo "<ion-icon name='person-outline'></ion-icon>
-              <p class='header-action-label'>Sign In</p>";
-            }
-          ?>
-        </button>
+
+        <div class="setting-container">
+            <button class="header-action-btn" <?php echo (isset($_SESSION['type']) && $_SESSION['type'] == 'user') ? "onclick=\"openPopup('accountSetting')\"" : "id='show-login1'"; ?>">
+              <?php 
+                if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+                  echo "<ion-icon name='person-circle-outline' class='hide'></ion-icon>
+                    <p class='header-action-label hide'>Account</p>";
+                } else {
+                  echo "<ion-icon name='person-outline'></ion-icon>
+                  <p class='header-action-label'>Sign In</p>";
+                }
+              ?>
+            </button>
+
+            <div class="account-option"  id="accountOption"> 
+                <div class="account-btn">
+                  <button onclick="openPopup('orders')"><i class='bx bx-receipt'></i>Orders</button>
+                </div>
+
+                <div class="account-btn">
+                  <button onclick="openPopup('logout')"><i class='bx bx-log-out'></i>Logout</button>
+                </div>
+            </div>
+        </div>
         
         <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') { ?>
           <button class="header-action-btn" id="show-cart">
@@ -63,16 +79,8 @@
 
             <p class="header-action-label">Cart</p>
 
-            <!-- <?php
-              // if (isset( $_SESSION["numberofitems"])) {
-              //   echo "<div class='btn-badge green' aria-hidden='true' id='numCarts'>";
-              //     echo $_SESSION['numberofitems'];
-              //   echo "</div>";
-              // }
-            ?> -->
-
             <div class="btn-badge green" id="numCarts">
-              
+              <!-- print the number ng item sa carts using ajax -->
             </div>
 
           </button>
@@ -111,9 +119,9 @@
 
         <div class="navbar-top">
 
-          <a href="#" class="logo">
+          <!-- <a href="#" class="logo">
             <img src="relativeFiles/images/logo&bg/logo.png" alt="Xxchord" width="130" height="31">
-          </a>
+          </a> -->
 
           <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
             <ion-icon name="close-outline"></ion-icon>
@@ -136,47 +144,49 @@
           </div>
 
           <li>
-            <a href="index.php" class="navbar-link">Home</a>
+            <a href="index.php" class="navbar-link"><ion-icon name="home-outline"></ion-icon>Home</a>
           </li>
 
           <li>
-            <a href="#blog" class="navbar-link">About</a>
+            <a href="#blog" class="navbar-link"><ion-icon name="information-circle-outline"></ion-icon>About</a>
           </li>
 
           <li>
-            <a href="products.php?prodPage=true" class="navbar-link">Products</a>
+            <a href="products.php?prodPage=true" class="navbar-link"><ion-icon name="cube-outline"></ion-icon>Products</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Contact</a>
+            <a href="#" class="navbar-link"><ion-icon name="call-outline"></ion-icon>Contact</a>
           </li>
 
-            <div class="account-option"  id="accountOption"> 
-            
-                <div class="account-btn">
-                  <i class='bx bx-receipt'></i>
-                  <button onclick="openPopup('orders')">Orders</button>
-                </div>
-
-                <div class="account-btn">
-                  <i class='bx bx-log-out'></i>
-                  <button onclick="openPopup('logout')">Logout</button>
-                </div>
-
-                <div id="popup" class="popup">
-                  <h2>orders</h2>
-                  <p>order 1</p>
-                  <button onclick="closePopup()">Close</button>
-                </div>
-
-                <div id="overlay" class="overlay"></div>
-
-            </div>
-
+          <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') { ?>
+              <li>
+                <a href="#" class="navbar-link account-btn" onclick="openPopup('orders')"><ion-icon name="newspaper-outline"></ion-icon>Orders</a>
+              </li>
+              <li>
+                  <div class="profile-details">
+                      <button onclick="openPopup('logout')">
+                        <i class='bx bx-log-out'></i>
+                      </button>
+                      <div class="name-job">
+                          <div class="profile_name"><?php echo $_SESSION['Uname'] ?></div>
+                      </div>
+                  </div>
+              </li>
+          <?php } ?>
 
         </ul>
 
       </nav>
+      
+
+          <div id="popup-order" class="popup-order">
+            <h2>orders</h2>
+            <p>order 1</p>
+            <button onclick="closePopup()">Close</button>
+          </div>
+
+          <!-- <div id="overlay" class="overlay"></div> -->
 
     </div>
   </header>
@@ -189,10 +199,9 @@
       if (action === 'orders') {
         
 
-        // document.getElementById('popupTitle').innerText = title;
-        // document.getElementById('popupContent').innerText = content;
         
-        document.getElementById('popup').style.display = 'block';
+        
+        document.getElementById('popup-order').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
 
       } else if (action === 'logout') {
@@ -217,7 +226,7 @@
     }
 
     function closePopup() {
-      document.getElementById('popup').style.display = 'none';
+      document.getElementById('popup-order').style.display = 'none';
       document.getElementById('overlay').style.display = 'none';
     }
   </script>
