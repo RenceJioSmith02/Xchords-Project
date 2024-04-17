@@ -415,15 +415,15 @@
 </section>
 
 
-  <!-- side bar and pop-ups script -->
+    <!-- side bar and pop-ups script -->
     <script src="../relativeFiles/js/admin-pop.js"></script>
 
     
 
 
     <!-- ionicons -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     
 </body>
 </html>
