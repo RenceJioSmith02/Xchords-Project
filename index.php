@@ -2,12 +2,10 @@
 
   session_start();
 
-  // // sessions
-  // if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
-  //   header("Location: index.php?success=login_success");
-  // }  elseif (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
-  //   header("Location: ./admin_panel/admin.php");
-  // }
+  // sessions
+  if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
+    header("Location: ./admin_panel/admin.php");
+  }
 
   if (isset( $_GET["logout"])) {
     session_destroy();
