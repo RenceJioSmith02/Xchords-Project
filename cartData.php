@@ -94,7 +94,7 @@
                 <li class="cart-item">
 
                     <div class="img-box">
-                        <img src="<?php echo $row['Pimage'];?>" alt="<?php echo $row['Pimage'];?>" loading="lazy" width="40px">
+                        <img src="./relativeFiles/images/E-guitars/<?php echo $row['Pimage'];?>" alt="<?php echo $row['Pimage'];?>" loading="lazy" width="40px">
                         <p><?php echo $row['Pname'];?></p>
                     </div>
 
@@ -105,7 +105,7 @@
                     </div>
 
                     <button class="delete-item">
-                        <ion-icon name="trash-outline" style="font-size: 20px;"></ion-icon>
+                        <ion-icon name="trash-outline"></ion-icon>
                     </button>
                 </li>
             <?php    
