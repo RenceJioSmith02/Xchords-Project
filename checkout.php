@@ -1,108 +1,7 @@
 <?php
-    session_start();
-    require_once "./admin_panel/backend.php";
-    $connect = new Connect_db();
-    $query = new Queries($connect);
-
-    
-
-    if (isset($_POST['save-btn'])) {
-        $fullname = $_POST['fullname'];
-        $phonenumber = $_POST['phonenum'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zip_code = $_POST['zipcode'];
-        $accountID =  $_SESSION['UID'];
-
-        $queryship = new ShippingInfo($connect, $fullname, $phonenum, $address, $city, $state, $zip_code,'','');
-
-        $result =  $queryship->insertShipDetails($accountID);
-
-        if ($result != 0) {
-            $_SESSION['foriegnkey'] = $result;
-        }else {
-            echo "<script> alert('Error in saving details'); </script>";
-        }
-        
-    }
-
-    if (isset($_SESSION['foreignkey'])) {
-
-        if (isset($_POST['order-btn'])) {
-            $nameoncard = $_POST['nameoncard'];
-            $cardnumber = $_POST['cardnum'];
-            
-            $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
-            
-            $result = $querypay->insertPayment( $_SESSION['foreignkey']);
-
-            if ($result) {
-                header("location: product.php?msg=no_address_details");
-            }
-            else {
-                header("location: checkout.php?msg=order_unsuccessful");
-            }
-        }
-
-    }else {
-        header("location: checkout.php?msg=no_address_details");
-    }
-
-
-    //update  address information to the database
-    if (isset($_POST['update_address'])) {
-        $fullname = $_POST['fullname'];
-        $phonenumber = $_POST['phonenum'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zip_code = $_POST['zipcode'];
-        $accountID =  $_SESSION['UID'];
-
-        $queryship = new ShippingInfo($connect, $fullname, $phonenum, $address, $city, $state, $zip_code,'','');
-
-        $result =  $queryship->updateShipDetails($accountID);
-
-        if ($result != 0) {
-            header("location: checkout.php?msg=address_details_updated");
-        }else {
-            echo "<script> alert('Error in saving details'); </script>";
-        }
-    }
-
-    $getID = $query->getshippingID($_SESSION['UID']) ;
-
-    if ($getID) {
-        $_SESSION['updatekey'] = $getID['shippingID'];
-    }
-
-    if (isset($_SESSION['updatekey'])) {
-
-        if (isset($_POST['order-update'])) {
-            $nameoncard = $_POST['nameoncard'];
-            $cardnumber = $_POST['cardnum'];
-            
-            $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
-            
-            $result = $querypay->insertPayment( $_SESSION['updatekey']);
-
-            if ($result) {
-                header("location: product.php?msg=no_address_details");
-            }
-            else {
-                header("location: checkout.php?msg=order_unsuccessful");
-            }
-        }
-
-    }else {
-        header("location: checkout.php?msg=updating_address_failed");
-    }
-
-    
-
-    
-    
+    require_once 'database.php';
+    $database = new Database();
+    $connection = $database->getConnection();
 ?>
 
 <!DOCTYPE html>
@@ -129,10 +28,10 @@
 <body>
 
 
-    <!-- #HEADER -->
-    
-    <?php include 'header&footer/header.php'; ?>
-    <?php include 'login/login.php'; ?>
+  <!-- #HEADER -->
+  
+  <?php include 'header&footer/header.php'; ?>
+  <?php include 'login/login.html'; ?>
 
 <div class="shipping-container">
     

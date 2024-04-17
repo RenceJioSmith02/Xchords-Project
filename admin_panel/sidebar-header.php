@@ -1,8 +1,8 @@
 <?php
-if (isset($_GET['logout'])) {
-  session_destroy();
-  header( "location: ../index.php" );
-}
+// if (isset($_GET['logout'])) {
+//   session_destroy();
+//   header( "location: ../index.php" );
+// }
 ?>
 
 
@@ -80,13 +80,13 @@ if (isset($_GET['logout'])) {
 
           <li>
               <div class="profile-details">
-              <div class="profile-content">
-                  <!--<img src="image/profile.jpg" alt="profileImg">-->
-              </div>
-              <div class="name-job">
-                  <div class="profile_name">ADMINISTRATOR</div>
-                  <div class="job">Xchords</div>
-              </div>
+                  <div class="profile-content">
+                      <!--<img src="image/profile.jpg" alt="profileImg">-->
+                  </div>
+                  <div class="name-job">
+                      <div class="profile_name">ADMINISTRATOR</div>
+                      <div class="job">Xchords</div>
+                  </div>
                   <button onclick="logout()">
                     <i class='bx bx-log-out'></i>
                   </button>
@@ -102,7 +102,6 @@ if (isset($_GET['logout'])) {
 
 
   <script>
-
     function logout() {
       Swal.fire({
             title: 'Are you sure?',
