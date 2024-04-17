@@ -224,7 +224,7 @@
                                         <a href="pop-ups.php?pop=viewSpecs&id=<?php echo $row['PID'] ?>"><ion-icon name="eye-outline"></ion-icon></a>
 
                                     </td>
-                                    <td><img src="<?php echo $row['Pimage'] ?>" alt="Product Image" style="max-width: 100px;"></td>
+                                    <td><img src="<?php echo "." . $row['Pimage']; ?>" alt="Product Image" style="max-width: 100px;"></td>
                                     <td>
                                         <a href="pop-ups.php?pop=updateProduct&updateId=<?php echo $row['PID'] ?>"><ion-icon name="create-outline"></ion-icon></a>
                                         <a href="table.php?deleteid=<?php echo $row['PID'] ?>" onclick="return confirm('Are you sure you want to delete this product?')"><ion-icon name="trash"></ion-icon></a>

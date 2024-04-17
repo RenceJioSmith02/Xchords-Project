@@ -63,7 +63,7 @@
   transition: all 0.4s ease;
 }
 .sidebar .nav-links li:hover{
-  background: #141414;
+  background: #28282B;
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -213,6 +213,10 @@
 .sidebar.close .profile-details .profile_name,
 .sidebar.close .profile-details .job{
   display: none;
+}
+.profile-details button {
+  border: none;
+  background: none;
 }
  
 
@@ -499,13 +503,9 @@ tbody td{
   height: 70px;
   text-align: center;
 }
-img{
-  width: 100%;
-  max-width: 36px;
-  height: 100%;
-  max-height: 36px;
-  border-radius: 50%;
-  vertical-align: middle;
+tbody tr td img{
+  width: 60px;
+  rotate: 45deg;
 }
 
 

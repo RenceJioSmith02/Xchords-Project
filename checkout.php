@@ -45,8 +45,6 @@
             }
         }
 
-    }else {
-        header("location: checkout.php?msg=no_address_details");
     }
 
 
@@ -95,10 +93,7 @@
             }
         }
 
-    }else {
-        header("location: checkout.php?msg=updating_address_failed");
     }
-
     
 
     
@@ -172,7 +167,7 @@
                         <div class="inputBox">
                             <input type="hidden" value="<?php if (isset($row['shippingID'])) echo $row['shippingID']; ?>" name="ID">
                             <span>full name :</span>
-                            <input type="text" name="fullname" value="<?php if (isset($row['fullname'])) echo $row['fullname']; ?>" placeholder="Full Name" required>
+                            <input type="text" name="fullname" value="<?php if (isset($row['fullname'])) echo $row['fullname']; ?>" placeholder="Rence Jio Smith Bal-ot" required>
                         </div>
 
                         <div class="inputBox">
@@ -182,11 +177,11 @@
 
                         <div class="inputBox">
                             <span>address :</span>
-                            <input type="text" name="address" value="<?php if (isset($row['address'])) echo $row['address']; ?> placeholder="room - street - locality required>
+                            <input type="text" name="address" value="<?php if (isset($row['address'])) echo $row['address']; ?>" placeholder="room - street - locality" required>
                         </div>
                         <div class="inputBox">
                             <span>city :</span>
-                            <input type="text" value="<?php if (isset($row['city'])) echo $row['city']; ?>" name="city" required>
+                            <input type="text" value="<?php if (isset($row['city'])) echo $row['city']; ?>" name="city" placeholder="San Jose" required>
                         </div>
 
                         <div class="flex">
@@ -245,7 +240,7 @@
                 </div>
                 <div class="inputBox">
                     <span>name on card :</span>
-                    <input type="text" name="nameoncard" value="<?php if (isset($row1['nameoncard']) && $result1) echo $row1['nameoncard']; ?>" placeholder="Full Name" required>
+                    <input type="text" name="nameoncard" value="<?php if (isset($row1['nameoncard']) && $result1) echo $row1['nameoncard']; ?>" placeholder="Jhero Antonio" required>
                 </div>
                 <div class="inputBox">
                     <span>credit card number :</span>
@@ -270,7 +265,7 @@
         ?>
                 <li class="cart-item">
                     <div class="prod-img">
-                        <img src="./relativeFiles/images/E-guitars/<?php echo $row['Pimage'];?>" alt="<?php echo $row['Pimage'];?>" loading="lazy" width="40px">
+                        <img src="<?php echo $row['Pimage'];?>" alt="<?php echo $row['Pimage'];?>" loading="lazy" width="40px">
                     </div>
 
                     <div class="text-prod-infos">

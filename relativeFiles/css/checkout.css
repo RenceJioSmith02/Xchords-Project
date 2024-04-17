@@ -188,7 +188,7 @@
 }
 
 .shiping-items .cart-lists li {
-  padding: 10px;
+  padding: 15px;
   background: rgba(0,0,0,0.06);
 }
 .shiping-items .cart-item .img-box  {
@@ -207,6 +207,7 @@
 
   flex-direction: column;
   width: 100%;
+  margin-left: 20px;
 }
 .text-prod-infos .lower-part {
   display: flex;

@@ -8,49 +8,49 @@
 
 
     // add product
-    if (isset($_POST['submit'])) {
-        $productName = $_POST['product-name'];
-        $productType = $_POST['product-type'];
-        $productPrice = $_POST['product-price'];
-        $aboutProduct = $_POST['about-product'];
-        $uploadedFiles = $_FILES["product-image"];
-        $bodymaterial = $_POST['bodymaterial'];
-        $bodyfinish = $_POST['bodyfinish'];
-        $fretboardmaterial = $_POST['fretboardmaterial'];
-        $numoffrets = $_POST['numoffrets'];
-        $strings = $_POST['strings'];
+    // if (isset($_POST['submit'])) {
+    //     $productName = $_POST['product-name'];
+    //     $productType = $_POST['product-type'];
+    //     $productPrice = $_POST['product-price'];
+    //     $aboutProduct = $_POST['about-product'];
+    //     $uploadedFiles = $_FILES["product-image"];
+    //     $bodymaterial = $_POST['bodymaterial'];
+    //     $bodyfinish = $_POST['bodyfinish'];
+    //     $fretboardmaterial = $_POST['fretboardmaterial'];
+    //     $numoffrets = $_POST['numoffrets'];
+    //     $strings = $_POST['strings'];
     
-        if ($uploadedFiles["error"] === 4) {
-            echo "<script> alert('Image does not exist.'); </script>";
-        } else {
-            $fileName = $uploadedFiles["name"];
-            $fileSize = $uploadedFiles["size"];
-            $tempName = $uploadedFiles["tmp_name"];
+    //     if ($uploadedFiles["error"] === 4) {
+    //         echo "<script> alert('Image does not exist.'); </script>";
+    //     } else {
+    //         $fileName = $uploadedFiles["name"];
+    //         $fileSize = $uploadedFiles["size"];
+    //         $tempName = $uploadedFiles["tmp_name"];
     
-            $validImgExtension = ['jpg', 'jpeg', 'png'];
-            $imgExtension = explode(".", $fileName);
-            $imgExtension = strtolower(end($imgExtension));
+    //         $validImgExtension = ['jpg', 'jpeg', 'png'];
+    //         $imgExtension = explode(".", $fileName);
+    //         $imgExtension = strtolower(end($imgExtension));
             
-            // Check file extension
-            if (!in_array($imgExtension, $validImgExtension)) {
-                echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
-            } elseif ($fileSize > 4000000) {
-                echo "<script> alert('Image is too large.'); </script>";
-            } else {
-                $newImgName = uniqid() . "." . $imgExtension;
-                $filePath = "../relativeFiles/images/productpics/" . $newImgName;
-                move_uploaded_file($tempName, $filePath);
+    //         // Check file extension
+    //         if (!in_array($imgExtension, $validImgExtension)) {
+    //             echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
+    //         } elseif ($fileSize > 4000000) {
+    //             echo "<script> alert('Image is too large.'); </script>";
+    //         } else {
+    //             $newImgName = uniqid() . "." . $imgExtension;
+    //             $filePath = "./relativeFiles/images/productpics/" . $newImgName;
+    //             move_uploaded_file($tempName, $filePath);
     
-                $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
+    //             $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
                 
-                if ($query1->InsertProducts()) {
-                    header("Location: table.php?table=Products&insert=success");
-                }else {
-                    die("Error inserting data into database.");
-                }
-            }
-        }
-    }
+    //             if ($query1->InsertProducts()) {
+    //                 header("Location: table.php?table=Products&insert=success");
+    //             }else {
+    //                 die("Error inserting data into database.");
+    //             }
+    //         }
+    //     }
+    // }
 
     // update
     if (isset($_POST['update'])) {
@@ -83,14 +83,17 @@
                     $query = new Queries($connect);
 
                     $imagePath = $query->getProductImageById($id);
+                    $titeniJheromaleet = ".".$imagePath;
 
                     if ($imagePath && file_exists($imagePath)) {
-                        unlink($imagePath);
+                        unlink($titeniJheromaleet);
                     }
 
                     $newImgName = uniqid() . "." . $imgExtension;
-                    $updatedimage = "../relativeFiles/images/productpics/" . $newImgName;
-                    move_uploaded_file($tempName, $updatedimage);
+                    $filepath = "../relativeFiles/images/productpics/" . $newImgName;
+                    move_uploaded_file($tempName, $filepath);
+
+                    $updatedimage = "./relativeFiles/images/productpics/" . $newImgName;
 
                 } else {
                     $updatedimage = $oldimage;
@@ -125,49 +128,50 @@
     }
 
 
-    // if (isset($_POST['submit'])) {
-    //     $productName = $_POST['product-name'];
-    //     $productType = $_POST['product-type'];
-    //     $productPrice = $_POST['product-price'];
-    //     $aboutProduct = $_POST['about-product'];
-    //     $uploadedFiles = $_FILES["product-image"];
-    //     $bodymaterial = $_POST['bodymaterial'];
-    //     $bodyfinish = $_POST['bodyfinish'];
-    //     $fretboardmaterial = $_POST['fretboardmaterial'];
-    //     $numoffrets = $_POST['numoffrets'];
-    //     $strings = $_POST['strings'];
+    if (isset($_POST['submit'])) {
+        $productName = $_POST['product-name'];
+        $productType = $_POST['product-type'];
+        $productPrice = $_POST['product-price'];
+        $aboutProduct = $_POST['about-product'];
+        $uploadedFiles = $_FILES["product-image"];
+        $bodymaterial = $_POST['bodymaterial'];
+        $bodyfinish = $_POST['bodyfinish'];
+        $fretboardmaterial = $_POST['fretboardmaterial'];
+        $numoffrets = $_POST['numoffrets'];
+        $strings = $_POST['strings'];
     
-    //     if ($uploadedFiles["error"] === 4) {
-    //         echo "<script> alert('Image does not exist.'); </script>";
-    //     } else {
-    //         $fileName = $uploadedFiles["name"];
-    //         $fileSize = $uploadedFiles["size"];
-    //         $tempName = $uploadedFiles["tmp_name"];
+        if ($uploadedFiles["error"] === 4) {
+            echo "<script> alert('Image does not exist.'); </script>";
+        } else {
+            $fileName = $uploadedFiles["name"];
+            $fileSize = $uploadedFiles["size"];
+            $tempName = $uploadedFiles["tmp_name"];
     
-    //         $validImgExtension = ['jpg', 'jpeg', 'png'];
-    //         $imgExtension = explode(".", $fileName);
-    //         $imgExtension = strtolower(end($imgExtension));
+            $validImgExtension = ['jpg', 'jpeg', 'png'];
+            $imgExtension = explode(".", $fileName);
+            $imgExtension = strtolower(end($imgExtension));
             
-    //         // Check file extension
-    //         if (!in_array($imgExtension, $validImgExtension)) {
-    //             echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
-    //         } elseif ($fileSize > 4000000) {
-    //             echo "<script> alert('Image is too large.'); </script>";
-    //         } else {
-    //             $newImgName = uniqid() . "." . $imgExtension;
-    //             $filePath = "productpics/" . $newImgName;
-    //             move_uploaded_file($tempName, $filePath);
-    
-    //             $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
+            // Check file extension
+            if (!in_array($imgExtension, $validImgExtension)) {
+                echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
+            } elseif ($fileSize > 4000000) {
+                echo "<script> alert('Image is too large.'); </script>";
+            } else {
+                $newImgName = uniqid() . "." . $imgExtension;
+                $filePath = "../relativeFiles/images/productpics/" . $newImgName;
+                move_uploaded_file($tempName, $filePath);
                 
-    //             if ($query1->InsertProducts()) {
-    //                 header("Location: table.php?table=Products&insert=success");
-    //             }else {
-    //                 die("Error inserting data into database.");
-    //             }
-    //         }
-    //     }
-    // }
+                $filepathName = "./relativeFiles/images/productpics/" . $newImgName;
+                $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filepathName, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
+                
+                if ($query1->InsertProducts()) {
+                    header("Location: table.php?table=Products&insert=success");
+                }else {
+                    die("Error inserting data into database.");
+                }
+            }
+        }
+    }
 
 
 ?>
