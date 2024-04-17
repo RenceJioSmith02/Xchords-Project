@@ -54,8 +54,7 @@
   display: block;
 }
 
-.shipping-container form .row .col .inputBox input,
-.shipping-container form .row .col .inputBox select {
+.shipping-container form .row .col .inputBox input{
   width: 100%;
   border:1px solid #ccc;
   padding:10px 15px;

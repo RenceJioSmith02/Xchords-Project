@@ -1,12 +1,4 @@
     <?php
-        session_start();
-
-        // sessions
-        if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
-          header("Location: ../index.php");
-        } 
-
-
         require("backend.php");
         $connect = new Connect_db();
 

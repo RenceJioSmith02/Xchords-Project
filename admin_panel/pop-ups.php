@@ -212,9 +212,8 @@
                         </div>
 
                         <div class="inputBox">
-                            <span>Product Category:</span>
                             <select name="product-type" id="product-type">
-                                <option value="0">---Select Category---</option>
+                                <option value="0">Category</option>
                                 <option value="1">ACOUSTIC</option>
                                 <option value="2">ELECTRIC</option>
                                 <option value="3">BASS</option>
@@ -286,68 +285,68 @@
                     <div class="col" style="margin-bottom: 20px;">
                         <h3 class="title">Update product</h3>
 
-                        <?php while ($row = mysqli_fetch_assoc($print)) : ?>
+                        <?php $row = mysqli_fetch_assoc($print)?>
                         <input type="hidden" name="PID" value="<?php echo $row['PID']; ?>">
                         <div class="inputBox">
                             <span>Product Name:</span>
                             <input type="text" id="product-name" name="product-name" value="<?php echo $row['Pname']; ?>" required>
                         </div>
 
-                            <div class="inputBox">
-                                <select name="product-type">
-                                    <option value="1" <?php if ($row['CID'] == '1') echo 'selected'; ?>>ACOUSTIC</option>
-                                    <option value="2" <?php if ($row['CID'] == '2') echo 'selected'; ?>>ELECTRIC</option>
-                                    <option value="3" <?php if ($row['CID'] == '3') echo 'selected'; ?>>BASS</option>
-                                    <option value="4" <?php if ($row['CID'] == '4') echo 'selected'; ?>>UKALELE</option>
-                                </select>
-                            </div>
+                        <div class="inputBox">
+                            <select name="product-type">
+                                <option value="1" <?php if ($row['CID'] == '1') echo 'selected'; ?>>ACOUSTIC</option>
+                                <option value="2" <?php if ($row['CID'] == '2') echo 'selected'; ?>>ELECTRIC</option>
+                                <option value="3" <?php if ($row['CID'] == '3') echo 'selected'; ?>>BASS</option>
+                                <option value="4" <?php if ($row['CID'] == '4') echo 'selected'; ?>>UKALELE</option>
+                            </select>
+                        </div>
 
-                            <div class="inputBox">
-                                <span>Product Price:</span>
-                                <input type="number" id="product-price" name="product-price" min="0" step="0.01" value="<?php echo $row['Pprice']; ?>" required>
-                            </div>
+                        <div class="inputBox">
+                            <span>Product Price:</span>
+                            <input type="number" id="product-price" name="product-price" min="0" step="0.01" value="<?php echo $row['Pprice']; ?>" required>
+                        </div>
+                        
+                        <div class="inputBox">
+                            <span>Product Images:</span>
+                            <input type="file" id="product-images" name="product-image">
+                            <input type="hidden" name="old-image" value="<?php echo $row['Pimage']; ?>">
+                        </div>
+
+                        <div class="inputBox">
+                            <span>Description:</span><br>
+                            <textarea name="about-product" id="about-product" cols="20" rows="5" value="<?php echo $row['Pdescription']; ?>" required><?php echo $row['Pdescription']; ?></textarea>
+                        </div>
+                    </div>
                             
-                            <div class="inputBox">
-                                <span>Product Images:</span>
-                                <input type="file" id="product-images" name="product-image">
-                                <input type="hidden" name="old-image" value="<?php echo $row['Pimage']; ?>">
-                            </div>
+                    <div class="col" style="margin-bottom: 20px;">
+                        <h3 class="title">Specification</h3>
 
-                            <div class="inputBox">
-                                <span>Description:</span><br>
-                                <textarea name="about-product" id="about-product" cols="20" rows="5" value="<?php echo $row['Pdescription']; ?>" required><?php echo $row['Pdescription']; ?></textarea>
-                            </div>
-                            </div>
-                                
-                            <div class="col" style="margin-bottom: 20px;">
-                            <h3 class="title">Specification</h3>
+                        <div class="inputBox">
+                            <span>body Material:</span>
+                            <input type="text" id="bodymaterial" name="bodymaterial" value="<?php echo $row['bodymaterial']; ?>" required>
+                        </div>
+                        
+                        <div class="inputBox">
+                            <span>body Finish:</span>
+                            <input type="text" id="bodyfinish" name="bodyfinish" value="<?php echo $row['bodyfinish']; ?>"  required>
+                        </div>
 
-                            <div class="inputBox">
-                                <span>body Material:</span>
-                                <input type="text" id="bodymaterial" name="bodymaterial" value="<?php echo $row['bodymaterial']; ?>" required>
-                            </div>
-                            
-                            <div class="inputBox">
-                                <span>body Finish:</span>
-                                <input type="text" id="bodyfinish" name="bodyfinish" value="<?php echo $row['bodyfinish']; ?>"  required>
-                            </div>
+                        <div class="inputBox">
+                            <span>Fret Board Material:</span>
+                            <input type="text" id="fretboardmaterial" name="fretboardmaterial" value="<?php echo $row['fretboardmaterial']; ?>" required>
+                        </div>
 
-                            <div class="inputBox">
-                                <span>Fret Board Material:</span>
-                                <input type="text" id="fretboardmaterial" name="fretboardmaterial" value="<?php echo $row['fretboardmaterial']; ?>" required>
-                            </div>
+                        <div class="inputBox">
+                            <span>Number of Frets:</span>
+                            <input type="number" id="numoffrets" name="numoffrets" min="0" step="0.01" value="<?php echo $row['numoffrets']; ?>" required>
+                        </div>
 
-                            <div class="inputBox">
-                                <span>Number of Frets:</span>
-                                <input type="number" id="numoffrets" name="numoffrets" min="0" step="0.01" value="<?php echo $row['numoffrets']; ?>" required>
-                            </div>
+                        <div class="inputBox">
+                            <span>Strings:</span>
+                            <input type="text" id="strings" name="strings" value="<?php echo $row['strings']; ?>" required>
+                        </div>
 
-                            <div class="inputBox">
-                                <span>Strings:</span>
-                                <input type="text" id="strings" name="strings" value="<?php echo $row['strings']; ?>" required>
-                            </div>
-
-                            <input type="submit" name="update" value="UPDATE" class="order-btn" style="margin-top: 30px">
+                        <input type="submit" name="update" value="UPDATE" class="order-btn" style="margin-top: 30px">
 
                     </div>
 
@@ -413,7 +412,7 @@
 </section>
 
 
-    <!-- side bar and pop-ups script -->
+  <!-- side bar and pop-ups script -->
     <script src="../relativeFiles/js/admin-pop.js"></script>
 
     

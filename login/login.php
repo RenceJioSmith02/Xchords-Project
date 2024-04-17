@@ -19,12 +19,11 @@
 
             if ($role === 0) {
                 $_SESSION['type'] = "admin";
-                header("Location: ./admin_panel/admin.php?msg=login_success");
+                header("Location: ./admin_panel/admin.php");
             }else{
                 $_SESSION['type'] = 'user';
                 $_SESSION['UID'] = $row['accountID'];
-                $_SESSION['Uname'] = $row['name'];
-                header("Location: index.php?msg=login_success");
+                header("Location: index.php?success=login_success");
             }
         }else {
             echo "<script>alert('Invalid email or password!')</script>";
