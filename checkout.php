@@ -1,4 +1,10 @@
 <?php
+
+    session_start();
+
+    include 'login/login.php'; 
+    include 'header&footer/header.php';
+
     require_once 'database.php';
     $database = new Database();
     $connection = $database->getConnection();
@@ -26,12 +32,6 @@
 
 </head>
 <body>
-
-
-  <!-- #HEADER -->
-  
-  <?php include 'header&footer/header.php'; ?>
-  <?php include 'login/login.html'; ?>
 
 <div class="shipping-container">
     
