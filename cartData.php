@@ -94,8 +94,8 @@
                 <li class="cart-item">
 
                     <div class="img-box">
-                    <img src="./relativeFiles/images/E-guitars/<?php echo $row['Pimage'];?>" alt="<?php echo $row['Pimage'];?>" loading="lazy" width="40px">
-                    <p><?php echo $row['Pname'];?></p>
+                        <img src="./relativeFiles/images/E-guitars/<?php echo $row['Pimage'];?>" alt="<?php echo $row['Pimage'];?>" loading="lazy" width="40px">
+                        <p><?php echo $row['Pname'];?></p>
                     </div>
 
                     <data value="<?php echo $row['Pprice'];?>">&#8369;<?php echo $row['Pprice'];?></data>
