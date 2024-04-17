@@ -15,8 +15,8 @@
 
         $result = $query->Print($start, $limit, $tablename, $primarykey);
         $rows = $result;
-
-        $totalRows = $query->getTotalRows();
+        
+        $totalRows = $query->getTotalRows($tablename);
         $totalPages = ceil($totalRows / $limit);
 
         $prev = $page - 1;

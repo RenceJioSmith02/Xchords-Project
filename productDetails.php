@@ -1,10 +1,7 @@
 <?php
-
-    session_start();
-
-    require_once 'database.php';
-    $database = new Database();
-    $connection = $database->getConnection();
+    require_once "./admin_panel/backend.php";
+    $connect = new Connect_db();
+    $query = new Queries($connect);
 
     $toSearch="";
     if (isset($_GET['searchBtn'])) {
@@ -13,9 +10,7 @@
     } elseif (isset($_GET['Pname'])) {
         $toSearch = $_GET['Pname'];
     }
-    $query = "SELECT * FROM `products` WHERE `Pname` LIKE '%$toSearch%'";
-
-    $result = mysqli_query($connection, $query);
+    $result = $query->Searchproduct($toSearch);
     $num_rows =  mysqli_num_rows($result);
 
 ?>
@@ -30,12 +25,12 @@
     <title>Document</title>
 
     <!-- 
-      - custom css link
+        - custom css link
     -->
     <link rel="stylesheet" href="relativeFiles/css/style.css">
 
     <!-- 
-      - google font link
+        - google font link
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,19 +144,22 @@
     <?php include 'header&footer/footer.html'; ?>
 
 
-      <!-- ajax -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-      <!-- 
-        - custom js link
-      -->
-      <script src="./relativeFiles/js/script.js"></script>
-      <script src="./relativeFiles/js/login.js"></script>
+        <!-- ajax -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-      <!-- 
-        - ionicon link
-      -->
-      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+        <!-- 
+            - custom js link
+        -->
+        <script src="./relativeFiles/js/script.js"></script>
+        <script src="./relativeFiles/js/login.js"></script>
+
+        <!-- 
+            - ionicon link
+        -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

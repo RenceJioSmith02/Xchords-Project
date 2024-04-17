@@ -38,7 +38,7 @@
                 echo "<script> alert('Image is too large.'); </script>";
             } else {
                 $newImgName = uniqid() . "." . $imgExtension;
-                $filePath = "productpics/" . $newImgName;
+                $filePath = "../relativeFiles/images/productpics/" . $newImgName;
                 move_uploaded_file($tempName, $filePath);
     
                 $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
@@ -89,7 +89,7 @@
                     }
 
                     $newImgName = uniqid() . "." . $imgExtension;
-                    $updatedimage = "productpics/" . $newImgName;
+                    $updatedimage = "../relativeFiles/images/productpics/" . $newImgName;
                     move_uploaded_file($tempName, $updatedimage);
 
                 } else {
@@ -115,7 +115,7 @@
         $print = $query->printUpdateproducts($id);
         
     }
-              
+        
     if (isset($_GET['id'])) {
         $id =  $_GET['id'];
     
@@ -285,7 +285,7 @@
                     <div class="col" style="margin-bottom: 20px;">
                         <h3 class="title">Update product</h3>
 
-                        <?php while ($row = mysqli_fetch_assoc($print)) : ?>
+                        <?php $row = mysqli_fetch_assoc($print)?>
                         <input type="hidden" name="PID" value="<?php echo $row['PID']; ?>">
                         <div class="inputBox">
                             <span>Product Name:</span>
@@ -347,8 +347,6 @@
                         </div>
 
                         <input type="submit" name="update" value="UPDATE" class="order-btn" style="margin-top: 30px">
-
-                        <?php endwhile; ?>
 
                     </div>
 

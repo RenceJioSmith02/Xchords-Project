@@ -66,8 +66,6 @@
 
     $start = ($page - 1) * $limit;
 
-    // $tablename = "products";
-    // $primarykey = "PID";
 
     if (isset($_GET['table']) && $_GET['table'] == 'Products') {
         $tablename = "products";
@@ -94,24 +92,12 @@
         $primarykey = "4";
     } 
 
-    // $result = $query->Print($start, $limit, $tablename, $primarykey);
-    // $rows = $result;
-
-    // $totalRows = $query->getTotalRows();
-    // $totalPages = ceil($totalRows / $limit);
-
-    // $prev = $page - 1;
-    // $next = $page + 1;
-
-    // $count = 0;
-    // $count += ($page - 1) * 5;
-
     if (isset($_GET['table']) || isset($_GET['category']) || isset($_GET['page'])) {
         $result = $query->Print($start, $limit, $tablename, $primarykey);
         $rows = $result;
     }
     
-    $totalRows = $query->getTotalRows();
+    $totalRows = $query->getTotalRows($tablename);
     $totalPages = ceil($totalRows / $limit);
     
     $prev = $page > 1 ? $page - 1 : null;

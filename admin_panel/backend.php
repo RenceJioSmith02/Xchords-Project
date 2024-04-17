@@ -49,7 +49,7 @@
                         JOIN accounts AS a ON o.accountID = a.accountID
                             JOIN cart as c ON c.accountID = a.accountID
                             JOIN products AS p ON  c.PID = p.PID
-                                 ORDER BY o.productID ASC LIMIT  ?, ?";
+                                ORDER BY o.productID ASC LIMIT  ?, ?";
                     break;
                 case 'sales':
                     $sql = "SELECT * FROM sales
@@ -102,7 +102,7 @@
             return $result;
         }
 
-        public  function getTotalRows(){
+        public  function getTotalRows($tablename){
             $stmt = $this->connection->prepare("SELECT COUNT(*) AS total FROM products");
             $stmt->execute();
             $row = $stmt->get_result()->fetch_assoc();
@@ -143,7 +143,7 @@
         }
 
         public function printUpdateproducts($id){
-            $stmt = $this->connection->prepare("SELECT * FROM products JOIN specs ON products.PID= specs.specsID WHERE products.PID = ?");
+            $stmt = $this->connection->prepare("SELECT * FROM products JOIN specs ON products.PID= specs.productID WHERE products.PID = ?");
             $stmt->bind_param('i', $id);
             $stmt->execute();
             $results = $stmt->get_result();
@@ -161,8 +161,67 @@
             return $row['Pimage'];
         }
         
-        
+        public function Getusercart(){
+            $query = "SELECT c.cartID, p.Pname, p.Pprice, p.Pimage, c.quantity
+            FROM `cart` as c
+            INNER JOIN `products` AS p
+            ON p.PID=c.PID";
 
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute();
+            $results = $stmt->get_result();
+
+            return $results;
+        }
+
+        public function CalculateTotal(){
+            $query = "SELECT SUM(p.Pprice * c.quantity) + 200 AS total 
+            FROM cart as c
+            INNER JOIN products as p
+            ON p.PID = c.PID";
+            
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute();
+            $results = $stmt->get_result();
+
+            return $results;
+        }
+
+        public function Searchproduct($toSearch){
+            $query = "SELECT * FROM `products` WHERE `Pname` LIKE '%$toSearch%'";
+
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute();
+            $results = $stmt->get_result();
+
+            return $results;
+        }
+
+        public function Checkaddress($userID){
+            $stmt = $this->connection->prepare("SELECT * FROM shipping WHERE accountID = ?");
+            $stmt-> bind_param('s', $userID);
+            $stmt-> execute();
+            $res = $stmt-> get_result()-> fetch_assoc();
+            return $res;
+        }
+
+        public function Checkpayment($payID){
+            $stmt = $this->connection->prepare("SELECT * FROM payment WHERE paymentID = ?");
+            $stmt-> bind_param('s', $payID);
+            $stmt-> execute();
+            $res = $stmt-> get_result()-> fetch_assoc();
+            return $res;
+        }
+
+        public  function getshippingID($accountID){
+
+            $stmt = $this->connection->prepare("SELECT * FROM `shipping` WHERE `accountID`=?");
+                $stmt->bind_param( "i",  $accountID );
+                $stmt->execute();
+                $result_select = $stmt->get_result()->fetch_assoc();
+                return $result_select;
+                
+        }
 
 
     }
@@ -293,24 +352,83 @@
             }
         }
 
-        public function Update1($id){
-            // Return all attributes of the class
-            return [
-                'PID' => $id,
-                'Pname' => $this->productName,
-                'CID' => $this->productType,
-                'Pprice' => $this->productPrice,
-                'Pdescription' => $this->aboutProduct,
-                'Pimage' => $this->productPictures,
-                'bodymaterial' => $this->bodymaterial,
-                'bodyfinish' => $this->bodyfinish,
-                'fretboardmaterial' => $this->fretboardmaterial,
-                'numoffrets' => $this->numoffrets,
-                'strings' => $this->strings,
-                'specsID' => $id
-            ];
-        }
     }
+
+
+    class ShippingInfo {
+        protected $connection;
+        private $fullname;
+        private $phonenum;
+        private $address;
+        private $city;
+        private $state;
+        private $zip_code;
+        private $nameoncard;
+        private $cardnumber;
+    
+        public function __construct(Connect_db $connect, $fullname, $phonenum, $address, $city, $state, $zip_code, $nameoncard, $cardnumber) {
+            $this->connection = $connect->getConn();
+            $this->fullname = $fullname;
+            $this->phonenum = $phonenum;
+            $this->address = $address;
+            $this->city = $city;
+            $this->state = $state;
+            $this->zip_code = $zip_code;
+            $this->nameoncard = $nameoncard;
+            $this->cardnumber = $cardnumber; 
+        }
+    
+        public function insertShipDetails($accountID){
+
+            $stmt = $this->connection->prepare("INSERT INTO `shipping`(`fullname`, `phonenum`, `address`, `city`, `state`, `postalcode`, `accountID`, `paymentID`) VALUES(?,?,?,?,?,?,?,?)");
+            $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->zip_code, $accountID);
+            $result = $stmt->execute();
+
+            if ($result) {
+                $foreignkey =  mysqli_insert_id($this->connection);
+                return $foreignkey;
+            }else{
+                return 0;
+            }
+        }
+
+        public function updateShipDetails($accountID){
+
+            $stmt = $this->connection->prepare("UPDATE `shipping` SET `fullname`= ?,`phonenum`= ?,`address`= ?,`city`= ?',`state`= ?,`postalcode`= ? WHERE `accountID` = ?");
+            $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->zip_code, $accountID);
+            $result = $stmt->execute();
+
+            if ($result) {
+                return $result;
+            }else{
+                return 0;
+            }
+        }
+
+        public  function insertPayment($fk) {
+            
+            $stmt = $this->connection->prepare("INSERT INTO `payment`(`nameoncard`, `cardnumber`, `shippingID`) VALUES(?,?,?)");
+            $stmt->bind_param("sii" , $this->nameoncard, $this->cardnumber, $fk);
+            $result = $stmt->execute();
+        
+            if ($result) {
+                return $result;
+            }
+        }
+
+        public  function updatePayment($fk) {
+            
+            $stmt = $this->connection->prepare("UPDATE `payment` SET `nameoncard`= ?,`cardnumber`=? WHERE shippingID = ? ");
+            $stmt->bind_param("sii" , $this->nameoncard, $this->cardnumber, $fk);
+            $result = $stmt->execute();
+        
+            if ($result) {
+                return $result;
+            }
+        }
+
+    }
+    
         
 
 

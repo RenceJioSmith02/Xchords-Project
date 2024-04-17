@@ -159,8 +159,8 @@
 
           <?php
 
-            $database = new Database();
-            $connection = $database->getConnection();
+            $database = new Connect_db();
+            $connection = $database->getConn();
                 
                 if (isset($_POST['filterValue'])) {
                     $filterValue = $_POST['filterValue'];

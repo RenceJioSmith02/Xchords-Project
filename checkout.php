@@ -1,7 +1,108 @@
 <?php
-    require_once 'database.php';
-    $database = new Database();
-    $connection = $database->getConnection();
+    session_start();
+    require_once "./admin_panel/backend.php";
+    $connect = new Connect_db();
+    $query = new Queries($connect);
+
+    
+
+    if (isset($_POST['save-btn'])) {
+        $fullname = $_POST['fullname'];
+        $phonenumber = $_POST['phonenum'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
+        $zip_code = $_POST['zipcode'];
+        $accountID =  $_SESSION['UID'];
+
+        $queryship = new ShippingInfo($connect, $fullname, $phonenum, $address, $city, $state, $zip_code,'','');
+
+        $result =  $queryship->insertShipDetails($accountID);
+
+        if ($result != 0) {
+            $_SESSION['foriegnkey'] = $result;
+        }else {
+            echo "<script> alert('Error in saving details'); </script>";
+        }
+        
+    }
+
+    if (isset($_SESSION['foreignkey'])) {
+
+        if (isset($_POST['order-btn'])) {
+            $nameoncard = $_POST['nameoncard'];
+            $cardnumber = $_POST['cardnum'];
+            
+            $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
+            
+            $result = $querypay->insertPayment( $_SESSION['foreignkey']);
+
+            if ($result) {
+                header("location: product.php?msg=no_address_details");
+            }
+            else {
+                header("location: checkout.php?msg=order_unsuccessful");
+            }
+        }
+
+    }else {
+        header("location: checkout.php?msg=no_address_details");
+    }
+
+
+    //update  address information to the database
+    if (isset($_POST['update_address'])) {
+        $fullname = $_POST['fullname'];
+        $phonenumber = $_POST['phonenum'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
+        $zip_code = $_POST['zipcode'];
+        $accountID =  $_SESSION['UID'];
+
+        $queryship = new ShippingInfo($connect, $fullname, $phonenum, $address, $city, $state, $zip_code,'','');
+
+        $result =  $queryship->updateShipDetails($accountID);
+
+        if ($result != 0) {
+            header("location: checkout.php?msg=address_details_updated");
+        }else {
+            echo "<script> alert('Error in saving details'); </script>";
+        }
+    }
+
+    $getID = $query->getshippingID($_SESSION['UID']) ;
+
+    if ($getID) {
+        $_SESSION['updatekey'] = $getID['shippingID'];
+    }
+
+    if (isset($_SESSION['updatekey'])) {
+
+        if (isset($_POST['order-update'])) {
+            $nameoncard = $_POST['nameoncard'];
+            $cardnumber = $_POST['cardnum'];
+            
+            $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
+            
+            $result = $querypay->insertPayment( $_SESSION['updatekey']);
+
+            if ($result) {
+                header("location: product.php?msg=no_address_details");
+            }
+            else {
+                header("location: checkout.php?msg=order_unsuccessful");
+            }
+        }
+
+    }else {
+        header("location: checkout.php?msg=updating_address_failed");
+    }
+
+    
+
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +117,7 @@
     <link rel="stylesheet" href="relativeFiles/css/style.css">
 
     <!-- 
-      - google font link
+    - google font link
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,10 +129,10 @@
 <body>
 
 
-  <!-- #HEADER -->
-  
-  <?php include 'header&footer/header.php'; ?>
-  <?php include 'login/login.html'; ?>
+    <!-- #HEADER -->
+    
+    <?php include 'header&footer/header.php'; ?>
+    <?php include 'login/login.php'; ?>
 
 <div class="shipping-container">
     
@@ -41,7 +142,23 @@
 
     <!-- <div id="address-overlay"></div> -->
 
-    <form action="">
+    <form action="" method="post">
+        <?php
+            // if (isset($_SESSION['userID'])) {
+            //     $userID = $_SESSION['userID'];
+            // }
+            $userID = 5;
+            $result = $query->Checkaddress($userID);
+
+            $row = $result;
+
+            $payID = 0;
+
+            if (isset($row['paymentID'])) {
+                $payID = $row['paymentID']; 
+            } 
+            
+        ?>
         <div id="address-modal">
             <div class="address-modal-content">
                 <span class="address-close">&times;</span>
@@ -53,35 +170,43 @@
                         <h3 class="title">billing address</h3>
 
                         <div class="inputBox">
+                            <input type="hidden" value="<?php if (isset($row['shippingID'])) echo $row['shippingID']; ?>" name="ID">
                             <span>full name :</span>
-                            <input type="text" placeholder="Rence Jio Bal-ot">
+                            <input type="text" name="fullname" value="<?php if (isset($row['fullname'])) echo $row['fullname']; ?>" placeholder="Full Name" required>
                         </div>
+
                         <div class="inputBox">
-                            <span>email :</span>
-                            <input type="email" placeholder="example@example.com">
+                            <span>Phone number:</span>
+                            <input type="number" name="phonenum" value="<?php if (isset($row['phonenum'])) echo $row['phonenum']; ?>" placeholder="09**********" required>
                         </div>
+
                         <div class="inputBox">
                             <span>address :</span>
-                            <input type="text" placeholder="room - street - locality">
+                            <input type="text" name="address" value="<?php if (isset($row['address'])) echo $row['address']; ?> placeholder="room - street - locality required>
                         </div>
                         <div class="inputBox">
                             <span>city :</span>
-                            <input type="text" placeholder="Nueva Ecija">
+                            <input type="text" value="<?php if (isset($row['city'])) echo $row['city']; ?>" name="city" required>
                         </div>
 
                         <div class="flex">
                             <div class="inputBox">
                                 <span>state :</span>
-                                <input type="text" placeholder="Philippines">
+                                <input type="text" name="state" value="<?php if (isset($row['state'])) echo $row['state']; ?>" placeholder="Philippines" required>
                             </div>
                             <div class="inputBox">
                                 <span>zip code :</span>
-                                <input type="text" placeholder="3119">
+                                <input type="text" name="zipcode" value="<?php if (isset($row['postalcode'])) echo $row['postalcode']; ?>" placeholder="3119" required>
                             </div>
                         </div>
                         
-                        <input type="submit" value="SAVE" name="save-btn" class="save-btn" id="save-btn"/>
-                    </form>
+                        <input type="submit" value="SAVE"
+                            <?php if ($result) {
+                            echo 'name="update_address"';
+                        } else {
+                            echo 'name="save-btn"';
+                        }  ?> class="save-btn" id="save-btn"/>
+                    
 
                     </div>
                 </div>
@@ -93,7 +218,20 @@
 
     <!-- lower form -->
 
-    <form action="">
+    <form action="" method="post">
+
+        <?php
+            // if (isset($_SESSION['userID'])) {
+            //     $userID = $_SESSION['userID'];
+            // }
+            $result1 = $query->Checkpayment($payID);
+
+            $row1 = $result;
+
+            
+            
+            
+        ?>
 
         <div class="row">
 
@@ -107,41 +245,22 @@
                 </div>
                 <div class="inputBox">
                     <span>name on card :</span>
-                    <input type="text" placeholder="Rence Jio Bal-ot">
+                    <input type="text" name="nameoncard" value="<?php if (isset($row1['nameoncard']) && $result1) echo $row1['nameoncard']; ?>" placeholder="Full Name" required>
                 </div>
                 <div class="inputBox">
                     <span>credit card number :</span>
-                    <input type="number" placeholder="1111-2222-3333-4444">
-                </div>
-                <div class="inputBox">
-                    <span>exp month :</span>
-                    <input type="text" placeholder="january">
-                </div>
-
-                <div class="flex">
-                    <div class="inputBox">
-                        <span>exp year :</span>
-                        <input type="number" step="1" min="2024" placeholder="2024">
-                    </div>
-                    <div class="inputBox">
-                        <span>CVV :</span>
-                        <input type="text" placeholder="1234">
-                    </div>
+                    <input type="text" name="cardnum" value="<?php if (isset($row1['cardnumber'])&& $result1) echo $row1['cardnumber']; ?>" placeholder="1111-2222-3333-4444" pattern="[0-9\-]*" title="Please enter numbers and dashes only" required>
                 </div>
 
             </div>
     
         </div>
-
         <div class="shiping-items">
         <?php
 
-            $query = "SELECT c.cartID, p.Pname, p.Pprice, p.Pimage, c.quantity
-            FROM `cart` as c
-            INNER JOIN `products` AS p
-            ON p.PID=c.PID";
+            // oop query na
 
-            $result = mysqli_query($connection, $query);
+            $result = $query->Getusercart();
 
             if (mysqli_num_rows($result) > 0) {
 
@@ -172,15 +291,9 @@
         ?>
     </div>
 
-    <?php
+    <?php //ginawa kong oop query
 
-        // Calculate total
-        $query = "SELECT SUM(p.Pprice * c.quantity) + 200 AS total 
-            FROM cart as c
-            INNER JOIN products as p
-            ON p.PID = c.PID";
-            
-        $result = mysqli_query($connection, $query);
+        $result = $query->CalculateTotal();
         $row = mysqli_fetch_assoc($result);
     ?>
         <div class="prod-total">
@@ -193,7 +306,16 @@
         }
     ?>
 
-        <input type="submit" name="order-btn" value="ORDER NOW" class="order-btn">
+        <input type="submit"  
+            <?php
+                if ($result) {
+                    echo 'name="order-btn"';
+                }else{
+                    echo 'name="order-update"';
+                }
+            ?>
+        
+        value="ORDER NOW" class="order-btn">
 
     </form>
 
@@ -206,7 +328,7 @@
     
 
     <script>
-       document.getElementById('open-ModalAddress').addEventListener('click', function() {
+        document.getElementById('open-ModalAddress').addEventListener('click', function() {
         // document.getElementById('address-overlay').style.display = 'block';
         document.getElementById('address-modal').style.display = 'block';
         });
@@ -217,21 +339,21 @@
         });
     </script>
 
-      
-      <!-- ajax -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
+        <!-- ajax -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-      <!-- 
-        - custom js link
-      -->
-      <script src="./relativeFiles/js/script.js"></script>
-      <script src="./relativeFiles/js/login.js"></script>
-      
+        <!-- 
+            - custom js link
+        -->
+        <script src="./relativeFiles/js/script.js"></script>
+        <script src="./relativeFiles/js/login.js"></script>
+        
 
-      <!-- 
-        - ionicon link
-      -->
-      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <!-- 
+            - ionicon link
+        -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
