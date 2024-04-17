@@ -39,7 +39,7 @@
                         <figure class="card-banner">
 
                         <a href="#">
-                            <img src="relativeFiles/images/E-guitars/<?php echo $row['Pimage'] ?>" alt="<?php echo $row['Pname'] ?>" loading="lazy" width="800"
+                            <img src="<?php echo $row['Pimage'] ?>" alt="<?php echo $row['Pname'] ?>" loading="lazy" width="800"
                             height="1034" class="w-100">
                         </a>
 

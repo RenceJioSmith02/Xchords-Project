@@ -124,6 +124,52 @@
         $row1 = $printspecs;
     }
 
+
+    // if (isset($_POST['submit'])) {
+    //     $productName = $_POST['product-name'];
+    //     $productType = $_POST['product-type'];
+    //     $productPrice = $_POST['product-price'];
+    //     $aboutProduct = $_POST['about-product'];
+    //     $uploadedFiles = $_FILES["product-image"];
+    //     $bodymaterial = $_POST['bodymaterial'];
+    //     $bodyfinish = $_POST['bodyfinish'];
+    //     $fretboardmaterial = $_POST['fretboardmaterial'];
+    //     $numoffrets = $_POST['numoffrets'];
+    //     $strings = $_POST['strings'];
+    
+    //     if ($uploadedFiles["error"] === 4) {
+    //         echo "<script> alert('Image does not exist.'); </script>";
+    //     } else {
+    //         $fileName = $uploadedFiles["name"];
+    //         $fileSize = $uploadedFiles["size"];
+    //         $tempName = $uploadedFiles["tmp_name"];
+    
+    //         $validImgExtension = ['jpg', 'jpeg', 'png'];
+    //         $imgExtension = explode(".", $fileName);
+    //         $imgExtension = strtolower(end($imgExtension));
+            
+    //         // Check file extension
+    //         if (!in_array($imgExtension, $validImgExtension)) {
+    //             echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
+    //         } elseif ($fileSize > 4000000) {
+    //             echo "<script> alert('Image is too large.'); </script>";
+    //         } else {
+    //             $newImgName = uniqid() . "." . $imgExtension;
+    //             $filePath = "productpics/" . $newImgName;
+    //             move_uploaded_file($tempName, $filePath);
+    
+    //             $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
+                
+    //             if ($query1->InsertProducts()) {
+    //                 header("Location: table.php?table=Products&insert=success");
+    //             }else {
+    //                 die("Error inserting data into database.");
+    //             }
+    //         }
+    //     }
+    // }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -149,54 +195,7 @@
         <div class="section-content" style="padding-bottom: 0;">
             <div class="box-container" style="padding:0;">
 
-
     <?php if (isset($_GET['pop']) && $_GET['pop'] == 'addProduct') { ?>
-
-        <?php            
-            if (isset($_POST['submit'])) {
-                $productName = $_POST['product-name'];
-                $productType = $_POST['product-type'];
-                $productPrice = $_POST['product-price'];
-                $aboutProduct = $_POST['about-product'];
-                $uploadedFiles = $_FILES["product-image"];
-                $bodymaterial = $_POST['bodymaterial'];
-                $bodyfinish = $_POST['bodyfinish'];
-                $fretboardmaterial = $_POST['fretboardmaterial'];
-                $numoffrets = $_POST['numoffrets'];
-                $strings = $_POST['strings'];
-            
-                if ($uploadedFiles["error"] === 4) {
-                    echo "<script> alert('Image does not exist.'); </script>";
-                } else {
-                    $fileName = $uploadedFiles["name"];
-                    $fileSize = $uploadedFiles["size"];
-                    $tempName = $uploadedFiles["tmp_name"];
-            
-                    $validImgExtension = ['jpg', 'jpeg', 'png'];
-                    $imgExtension = explode(".", $fileName);
-                    $imgExtension = strtolower(end($imgExtension));
-                    
-                    // Check file extension
-                    if (!in_array($imgExtension, $validImgExtension)) {
-                        echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
-                    } elseif ($fileSize > 4000000) {
-                        echo "<script> alert('Image is too large.'); </script>";
-                    } else {
-                        $newImgName = uniqid() . "." . $imgExtension;
-                        $filePath = "productpics/" . $newImgName;
-                        move_uploaded_file($tempName, $filePath);
-            
-                        $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
-                        
-                        if ($query1->InsertProducts()) {
-                            header("Location: table.php?table=Products&insert=success");
-                        }else {
-                            die("Error inserting data into database.");
-                        }
-                    }
-                }
-            }
-        ?>
         
         <div class="shipping-container" style="padding: 0 25px">
             <form id="add-product-form" action="pop-ups.php" method="post" enctype="multipart/form-data" style="max-width: 950px;">
@@ -276,7 +275,7 @@
             </form>
         </div>
 
-    <?php } elseif (isset($_GET['pop']) && $_GET['pop'] == 'updateProduct') {  ?>
+    <?php } elseif (isset($_GET['pop']) && $_GET['pop'] == 'updateProduct') { ?>
         
         <div class="shipping-container" style="padding: 0 25px">
             <form id="add-product-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data" style="max-width: 950;">
@@ -358,7 +357,7 @@
             
         </div>
 
-    <?php } elseif (isset($_GET['pop']) && $_GET['pop'] == 'viewSpecs') {  ?>
+    <?php } elseif (isset($_GET['pop']) && $_GET['pop'] == 'viewSpecs') { ?>
 
         <div class="shipping-container" style="padding: 0 25px">
 

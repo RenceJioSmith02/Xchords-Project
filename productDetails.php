@@ -60,7 +60,7 @@
                     ?>
                         <li class="product-card view-itemDetails">
                             <div class="box-detail image">
-                                <img src="relativeFiles/images/E-guitars/<?php echo $row['Pimage'] ?>" alt="guitar1" loading="guitar1" class="img">
+                                <img src="<?php echo $row['Pimage'] ?>" alt="guitar1" loading="guitar1" class="img">
                                 <div class="box-specs">
                                     <button class="">
                                         <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
