@@ -173,44 +173,12 @@
       
 
           <div id="popup-order" class="popup-order">
-
-            <center><h2>orders</h2></center>
-            <ul class="orders-container">
-
-              <li class="order-list">
-                
-                <div class="o-image">
-                  <img src="./relativeFiles/images/E-guitars/guitar1.png" alt="">
-                  <p>guitar 1</p>
-                </div>
-
-                <!-- <data value="<?php echo $row['Pprice'];?>">&#8369;<?php echo $row['Pprice'];?></data> -->
-                <div class="price">
-                  <p>&#8369;2000.00</p>
-                </div>
-
-                <div class="quantity">
-                  <span>x2</span>
-                </div>
-
-                <button class="recieved-btn">
-                  Recived
-                </button>
-              
-              </li>
-
-              <li class="order-list">hellow</li>
-              <li class="order-list">world</li>
-            </ul>
-
-            
-            <div class="order-close">
-              <button onclick="closePopup()">Close</button>
-            </div>
-
+            <h2>orders</h2>
+            <p>order 1</p>
+            <button onclick="closePopup()">Close</button>
           </div>
 
-          <div id="overlay" class="overlay"></div>
+          <!-- <div id="overlay" class="overlay"></div> -->
 
     </div>
   </header>
@@ -221,6 +189,10 @@
     function openPopup(action) {
       var title, content;
       if (action === 'orders') {
+        
+
+        
+        
         document.getElementById('popup-order').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
 
