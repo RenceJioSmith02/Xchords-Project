@@ -63,7 +63,7 @@
   transition: all 0.4s ease;
 }
 .sidebar .nav-links li:hover{
-  background: #141414;
+  background: #28282B;
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
