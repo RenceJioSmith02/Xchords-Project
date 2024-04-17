@@ -151,32 +151,66 @@
             <a href="#" class="navbar-link">Contact</a>
           </li>
 
-            <div class="account-option"  id="accountOption"> 
-            
-                <div class="account-btn">
-                  <i class='bx bx-receipt'></i>
-                  <button onclick="openPopup('orders')">Orders</button>
-                </div>
-
-                <div class="account-btn">
-                  <i class='bx bx-log-out'></i>
-                  <button onclick="openPopup('logout')">Logout</button>
-                </div>
-
-                <div id="popup" class="popup">
-                  <h2>orders</h2>
-                  <p>order 1</p>
-                  <button onclick="closePopup()">Close</button>
-                </div>
-
-                <div id="overlay" class="overlay"></div>
-
-            </div>
-
+          <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') { ?>
+              <li>
+                <a href="#" class="navbar-link account-btn" onclick="openPopup('orders')"><ion-icon name="newspaper-outline"></ion-icon>Orders</a>
+              </li>
+              <li>
+                  <div class="profile-details">
+                      <button onclick="openPopup('logout')">
+                        <i class='bx bx-log-out'></i>
+                      </button>
+                      <div class="name-job">
+                          <div class="profile_name"><?php echo $_SESSION['Uname'] ?></div>
+                      </div>
+                  </div>
+              </li>
+          <?php } ?>
 
         </ul>
 
       </nav>
+      
+
+          <div id="popup-order" class="popup-order">
+
+            <center><h2>orders</h2></center>
+            <ul class="orders-container">
+
+              <li class="order-list">
+                
+                <div class="o-image">
+                  <img src="./relativeFiles/images/E-guitars/guitar1.png" alt="">
+                  <p>guitar 1</p>
+                </div>
+
+                <!-- <data value="<?php echo $row['Pprice'];?>">&#8369;<?php echo $row['Pprice'];?></data> -->
+                <div class="price">
+                  <p>&#8369;2000.00</p>
+                </div>
+
+                <div class="quantity">
+                  <span>x2</span>
+                </div>
+
+                <button class="recieved-btn">
+                  Recived
+                </button>
+              
+              </li>
+
+              <li class="order-list">hellow</li>
+              <li class="order-list">world</li>
+            </ul>
+
+            
+            <div class="order-close">
+              <button onclick="closePopup()">Close</button>
+            </div>
+
+          </div>
+
+          <div id="overlay" class="overlay"></div>
 
     </div>
   </header>
@@ -187,12 +221,7 @@
     function openPopup(action) {
       var title, content;
       if (action === 'orders') {
-        
-
-        // document.getElementById('popupTitle').innerText = title;
-        // document.getElementById('popupContent').innerText = content;
-        
-        document.getElementById('popup').style.display = 'block';
+        document.getElementById('popup-order').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
 
       } else if (action === 'logout') {

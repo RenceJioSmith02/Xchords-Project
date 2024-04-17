@@ -415,8 +415,16 @@ h3 > a { color: inherit; }
   color: var(--white);
 }
 
-.navbar-list > li:not(:last-child) { border-bottom: 1px solid var(--light-1); }
 
+/* .navbar-list > li:nth-child(even){
+  background-color: yellow;
+} */
+/* .navbar-list > li:not(:last-child) { border-bottom: 1px solid var(--light-1); } */
+
+.navbar-list > li:hover ion-icon {
+  rotate:  360deg;
+  transition: var(--transition-2);
+}
 .overlay {
   position: fixed;
   inset: 0;
@@ -582,8 +590,7 @@ h3 > a { color: inherit; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
+  background: linear-gradient(to top, #28282B, #151515);
   border: 1px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
@@ -1083,6 +1090,67 @@ h3 > a { color: inherit; }
 /**
  * responsive for larger than 992px screen
  */
+@media screen and (max-width: 992px) {
+  .setting-container .header-action-label.hide,
+  .setting-container ion-icon.hide {
+    display: none;
+  }
+
+    /* profile-sidebar */
+ .profile-details{
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translate(-50%, -50%);
+
+    width: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background: #28282B;
+    padding: 12px 0;
+    transition: all 0.5s ease;
+    border-radius: 6px;
+    border: 1px solid white;
+  }
+  .profile-details .profile-content{
+    display: flex;
+    align-items: center;
+  }
+  li .profile-details .profile_name,
+  li .profile-details .job{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  li .profile-details button {
+    border: none;
+    background: none;
+  }
+  li i {
+    font-size: 30px;
+  }
+  .navbar-list li a {
+    font-size: 20px;
+  }
+  .navbar-list li a ion-icon {
+    display: inline-block;
+    margin: 0 15px;
+  }
+
+  .navbar-link,
+  .account-btn {
+    padding-block: 20px;
+  }
+
+  .navbar-list > li:hover{
+  background-color: #28282B;
+  transition: var(--transition-1);
+}
+
+}
+
 
 @media (min-width: 992px) {
 
