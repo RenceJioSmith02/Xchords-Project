@@ -8,7 +8,7 @@
 
     if (isset($_POST['save-btn'])) {
         $fullname = $_POST['fullname'];
-        $phonenumber = $_POST['phonenum'];
+        $phonenum = $_POST['phonenum'];
         $address = $_POST['address'];
         $city = $_POST['city'];
         $state = $_POST['state'];
@@ -20,14 +20,16 @@
         $result =  $queryship->insertShipDetails($accountID);
 
         if ($result != 0) {
-            $_SESSION['foriegnkey'] = $result;
+            $_SESSION['fkey'] = $result;
         }else {
             echo "<script> alert('Error in saving details'); </script>";
         }
         
     }
 
-    if (isset($_SESSION['foreignkey'])) {
+    if (isset($_SESSION['fkey'])) {
+
+        $fk = $_SESSION['fkey'];
 
         if (isset($_POST['order-btn'])) {
             $nameoncard = $_POST['nameoncard'];
@@ -35,10 +37,10 @@
             
             $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
             
-            $result = $querypay->insertPayment( $_SESSION['foreignkey']);
+            $result = $querypay->insertPayment($fk);
 
             if ($result) {
-                header("location: product.php?msg=no_address_details");
+                header("location: products.php?msg=success");
             }
             else {
                 header("location: checkout.php?msg=order_unsuccessful");
@@ -51,12 +53,14 @@
     //update  address information to the database
     if (isset($_POST['update_address'])) {
         $fullname = $_POST['fullname'];
-        $phonenumber = $_POST['phonenum'];
+        $phonenum = $_POST['phonenum'];
         $address = $_POST['address'];
         $city = $_POST['city'];
         $state = $_POST['state'];
         $zip_code = $_POST['zipcode'];
         $accountID =  $_SESSION['UID'];
+        // $_SESSION['updatekey'] = $_POST['ID'];
+
 
         $queryship = new ShippingInfo($connect, $fullname, $phonenum, $address, $city, $state, $zip_code,'','');
 
@@ -83,10 +87,10 @@
             
             $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
             
-            $result = $querypay->insertPayment( $_SESSION['updatekey']);
+            $result = $querypay->updatePayment( $_SESSION['updatekey']);
 
             if ($result) {
-                header("location: product.php?msg=no_address_details");
+                header("location: products.php?msg=Success_naba?");
             }
             else {
                 header("location: checkout.php?msg=order_unsuccessful");
@@ -149,8 +153,8 @@
 
             $payID = 0;
 
-            if (isset($row['paymentID'])) {
-                $payID = $row['paymentID']; 
+            if (isset($row['shippingID'])) {
+                $payID = $row['shippingID']; 
             } 
             
         ?>
@@ -221,11 +225,8 @@
             // }
             $result1 = $query->Checkpayment($payID);
 
-            $row1 = $result;
+            $row1 = $result1;
 
-            
-            
-            
         ?>
 
         <div class="row">
@@ -240,11 +241,11 @@
                 </div>
                 <div class="inputBox">
                     <span>name on card :</span>
-                    <input type="text" name="nameoncard" value="<?php if (isset($row1['nameoncard']) && $result1) echo $row1['nameoncard']; ?>" placeholder="Jhero Antonio" required>
+                    <input type="text" name="nameoncard" value="<?php if (isset($row1['nameoncard'])) echo $row1['nameoncard']; ?>" placeholder="Jhero Antonio" required>
                 </div>
                 <div class="inputBox">
                     <span>credit card number :</span>
-                    <input type="text" name="cardnum" value="<?php if (isset($row1['cardnumber'])&& $result1) echo $row1['cardnumber']; ?>" placeholder="1111-2222-3333-4444" pattern="[0-9\-]*" title="Please enter numbers and dashes only" required>
+                    <input type="text" name="cardnum" value="<?php if (isset($row1['cardnumber'])) echo $row1['cardnumber']; ?>" placeholder="1111-2222-3333-4444" pattern="[0-9\-]*" title="Please enter numbers and dashes only" required>
                 </div>
 
             </div>
@@ -303,10 +304,11 @@
 
         <input type="submit"  
             <?php
-                if ($result) {
-                    echo 'name="order-btn"';
-                }else{
+                if ($result1) {
                     echo 'name="order-update"';
+                }else{
+                    echo 'name="order-btn"';
+                    
                 }
             ?>
         

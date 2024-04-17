@@ -206,7 +206,7 @@
         }
 
         public function Checkpayment($payID){
-            $stmt = $this->connection->prepare("SELECT * FROM payment WHERE paymentID = ?");
+            $stmt = $this->connection->prepare("SELECT * FROM payment WHERE shippingID = ?");
             $stmt-> bind_param('s', $payID);
             $stmt-> execute();
             $res = $stmt-> get_result()-> fetch_assoc();
@@ -380,7 +380,7 @@
     
         public function insertShipDetails($accountID){
 
-            $stmt = $this->connection->prepare("INSERT INTO `shipping`(`fullname`, `phonenum`, `address`, `city`, `state`, `postalcode`, `accountID`, `paymentID`) VALUES(?,?,?,?,?,?,?,?)");
+            $stmt = $this->connection->prepare("INSERT INTO `shipping`(`fullname`, `phonenum`, `address`, `city`, `state`, `postalcode`, `accountID`) VALUES(?,?,?,?,?,?,?)");
             $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->zip_code, $accountID);
             $result = $stmt->execute();
 
@@ -394,7 +394,7 @@
 
         public function updateShipDetails($accountID){
 
-            $stmt = $this->connection->prepare("UPDATE `shipping` SET `fullname`= ?,`phonenum`= ?,`address`= ?,`city`= ?',`state`= ?,`postalcode`= ? WHERE `accountID` = ?");
+            $stmt = $this->connection->prepare("UPDATE `shipping` SET `fullname`= ?,`phonenum`= ?,`address`= ?,`city`= ?,`state`= ?,`postalcode`= ? WHERE `accountID` = ?");
             $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->zip_code, $accountID);
             $result = $stmt->execute();
 
