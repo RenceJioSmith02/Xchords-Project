@@ -382,8 +382,8 @@ h3 > a { color: inherit; }
   background: var(--dark-2);
   position: fixed;
   top: 0;
-  right: -300px;
-  max-width: 300px;
+  right: -256px;
+  max-width: 256px;
   width: 100%;
   height: 100%;
   padding: 30px 25px;
@@ -394,7 +394,7 @@ h3 > a { color: inherit; }
 
 .navbar.active {
   visibility: visible;
-  transform: translateX(-300px);
+  transform: translateX(-256px);
   transition: 0.5s var(--cubic-in);
   background: var(--dark-1);
 }
@@ -1196,7 +1196,7 @@ h3 > a { color: inherit; }
     bottom: 20px;
     transform: translate(-50%, -50%);
 
-    width: 260px;
+    width: 230px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -1225,7 +1225,7 @@ h3 > a { color: inherit; }
     font-size: 30px;
   }
   .navbar-list li a {
-    font-size: 20px;
+    font-size: 16px;
   }
   .navbar-list li a ion-icon {
     display: inline-block;
@@ -1234,7 +1234,7 @@ h3 > a { color: inherit; }
 
   .navbar-link,
   .account-btn {
-    padding-block: 20px;
+    padding-block: 15px;
   }
 
   .navbar-list > li:hover{

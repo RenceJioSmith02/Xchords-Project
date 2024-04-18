@@ -267,8 +267,8 @@
         
         public function insertSales($orderID) {
             $currentDate = date("Y-m-d"); 
-            $stmt = $this->connection->prepare("INSERT INTO `sales` (`Cname`, `Pname`, `Pprice`, `quantity`, `delivered`)
-                                                SELECT a.name as Cname, p.Pname, p.Pprice, o.quantity, ?
+            $stmt = $this->connection->prepare("INSERT INTO `sales` (`Cname`, `Pname`, `Pprice`, `categoryID`, `quantity`, `delivered`)
+                                                SELECT a.name as Cname, p.Pname, p.Pprice, p.CID, o.quantity, ?
                                                 FROM orders as o
                                                 INNER JOIN products as p
                                                 ON o.productID = p.PID
@@ -277,6 +277,31 @@
                                                 WHERE o.orderID = ?");
             $stmt->bind_param( "si", $currentDate, $orderID );
             $stmt->execute();
+        }
+
+        public function updateSalesChart ($CID) {
+                $stmt =  $this->connection->prepare("SELECT COUNT(salesID) AS total FROM `sales` WHERE categoryID = $CID");
+                $stmt->execute();
+                $result = $stmt->get_result()->fetch_assoc();
+
+            $total = $result["total"];
+
+            $stmt =  $this->connection->prepare("UPDATE `category` SET `salesCount`='$total' WHERE CID = $CID");
+            $stmt->execute();
+            return $total;
+        }
+
+        public function totalEarning() {
+            $stmt =  $this->connection->prepare("SELECT SUM(Pprice * quantity) AS total FROM sales");
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            return $result;
+        }
+        public function totalUsers() {
+            $stmt =  $this->connection->prepare("SELECT COUNT(DISTINCT accountID) AS total FROM accounts WHERE role = 1");
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            return $result;
         }
 
     }

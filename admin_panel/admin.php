@@ -1,7 +1,6 @@
     <?php
         require("backend.php");
         $connect = new Connect_db();
-
         $query = new Queries($connect);
 
         $limit = 5;
@@ -42,7 +41,27 @@
 <body>
 
   <!-- sidebar-header -->
-  <?php include 'sidebar-header.php'; ?>
+  <?php 
+    include 'sidebar-header.php'; 
+    
+    $earnings = $query->totalEarning();
+    $users = $query->totalUsers();
+
+    $acoustic = $query->updateSalesChart (1);
+    $electric = $query->updateSalesChart (2);
+    $bass = $query->updateSalesChart (3);
+    $ukalele = $query->updateSalesChart (4);
+
+    $total_catergory = $acoustic + $electric + $bass + $ukalele;
+
+    $acoustic = ($acoustic / $total_catergory) * 100;
+    $electric = ($electric / $total_catergory) * 100;
+    $bass = ($bass / $total_catergory) * 100;
+    $ukalele = ($ukalele / $total_catergory) * 100;
+  
+  ?>
+
+  
   
   <section class="section-panel">
     <div class="section-content">
@@ -76,10 +95,10 @@
             </div>
 
             <div class="chart" 
-            style="--acoustic: 30%; 
-                    --electric: 30%; 
-                    --bass: 20%; 
-                    --ukalele: 20%;"
+            style="--acoustic: <?php echo $acoustic."%"; ?>; 
+                    --electric: <?php echo $electric."%"; ?>; 
+                    --bass: <?php echo $bass."%"; ?>; 
+                    --ukalele: <?php echo $ukalele ."%";?>;"
             >
              <div class="center-circle"></div> 
             </div>
@@ -95,7 +114,7 @@
 
           <div class="icon-box">
             <div class="box1">
-              <span>1920</span>
+              <span><?php echo $users['total']; ?></span>
               <h3>Users</h3>
             </div>
   
@@ -110,7 +129,7 @@
 
           <div class="icon-box">
             <div class="box1">
-              <span>349,234</span>
+              <span>&#8369;<?php echo $earnings['total']; ?></span>
               <h3>Earnings</h3>
             </div>
   

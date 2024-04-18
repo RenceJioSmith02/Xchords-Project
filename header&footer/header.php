@@ -12,6 +12,12 @@
 
   if (isset($_GET['orderRecieved'])) {
     $query->insertSales($_GET['orderRecieved']);
+
+    $query->updateSalesChart (1);
+    $query->updateSalesChart (2);
+    $query->updateSalesChart (3);
+    $query->updateSalesChart (4);
+
     $query->deleteOrder($_GET['orderRecieved']);
   }
 
@@ -155,9 +161,6 @@
           <li>
             <a href="products.php?prodPage=true" class="navbar-link"><ion-icon name="cube-outline"></ion-icon>Products</a>
           </li>
-
-          <li>
-            <a href="#" class="navbar-link"><ion-icon name="call-outline"></ion-icon>Contact</a>
 
           <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') { ?>
               <li>
