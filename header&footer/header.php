@@ -194,17 +194,24 @@
           <?php while ($row = mysqli_fetch_assoc($result)) { ?>
 
             <li class="order-list">
-              <div class="o-image">
-                <img src="<?php echo $row['Pimage']; ?>" alt="">
-                <p><?php echo $row['Pname']; ?></p>
-              </div>
-              <div class="price">
-                <p>&#8369;<?php echo $row['Pprice']; ?></p>
-              </div>
-              <div class="quantity">
-                <span><?php echo $row['quantity']; ?></span>
-              </div>
-              <button class="received-btn" onclick="location.href='<?php echo $_SERVER['PHP_SELF'] . '?orderRecieved=' . $row['orderID'] ?>'">Received</button>
+                <div class="o-image">
+                  <img src="<?php echo $row['Pimage']; ?>" alt="">
+                  <p><?php echo $row['Pname']; ?></p>
+                </div>
+                <div class="price">
+                  <p>&#8369;<?php echo $row['Pprice']; ?></p>
+                </div>
+                <div class="quantity">
+                  <span><?php echo $row['quantity']; ?></span>
+                </div>
+
+                <?php
+                    if (isset($row['status']) && $row['status'] == 'pending') {
+                      echo "<span>Pending</span>";
+                    } else {
+                ?>
+                      <button class="received-btn" onclick="location.href='<?php echo $_SERVER['PHP_SELF'] . '?orderRecieved=' . $row['orderID'] ?>'">Received</button>
+              <?php } ?>
             </li>
 
           <?php } ?>
