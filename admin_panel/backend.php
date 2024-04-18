@@ -227,28 +227,27 @@
                 return $result_select;
         }
 
+
+        // new funtion natin pang order and sales table
+
         public function insertOrder($accountID) {
-            $stmt = $this->connection->prepare("SELECT p.PID, c.quantity, s.shippingID
+            $stmt = $this->connection->prepare("INSERT INTO `orders` (`productID`, `shippingID`, `accountID`,`quantity`)
+                                                SELECT p.PID, s.shippingID, ?, c.quantity
                                                 FROM products as p
                                                 INNER JOIN cart as c
                                                 ON c.accountID = ?
                                                 INNER JOIN shipping as s
                                                 ON s.accountID = ?");
-                $stmt->bind_param( "ii",  $accountID, $accountID);
-                $stmt->execute();
-                $row = $stmt->get_result()->fetch_assoc();
-                
-            $stmt =  $this->connection->prepare("INSERT INTO `orders` (`productID`, `shippingID`, `accountID`,`quantity`) VALUES(?,?,?,?)");
-        
-                $stmt->bind_param("isis", $row['PID'], $row['shippingID'], $accountID, $row['quantity']);
+                $stmt->bind_param( "iii", $accountID, $accountID, $accountID);
                 $success = $stmt->execute();
                 return $success;
         }
+
         public function selectOrder() {
             if (isset($_SESSION['UID'])) {
                 $accountID = $_SESSION['UID'];
             }
-            $stmt = $this->connection->prepare("SELECT p.Pimage, p.Pname, p.Pprice, o.quantity
+            $stmt = $this->connection->prepare("SELECT o.orderID, p.Pimage, p.Pname, p.Pprice, o.quantity
                                                 FROM orders as o
                                                 INNER JOIN products as p
                                                 ON o.productID = p.PID
@@ -259,6 +258,26 @@
             return $result_select;
         }
 
+        public function deleteOrder($orderID) {
+            $stmt =  $this->connection->prepare("DELETE FROM `orders` WHERE orderID = ?");
+        
+            $stmt->bind_param("i", $orderID);
+            $stmt->execute();
+        }
+        
+        public function insertSales($orderID) {
+            $currentDate = date("Y-m-d"); 
+            $stmt = $this->connection->prepare("INSERT INTO `sales` (`Cname`, `Pname`, `Pprice`, `quantity`, `delivered`)
+                                                SELECT a.name as Cname, p.Pname, p.Pprice, o.quantity, ?
+                                                FROM orders as o
+                                                INNER JOIN products as p
+                                                ON o.productID = p.PID
+                                                INNER JOIN accounts as a
+                                                ON o.accountID = a.accountID
+                                                WHERE o.orderID = ?");
+            $stmt->bind_param( "si", $currentDate, $orderID );
+            $stmt->execute();
+        }
 
     }
 

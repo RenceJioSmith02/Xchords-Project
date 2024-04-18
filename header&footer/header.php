@@ -10,6 +10,11 @@
     $toSearch = $_GET['search'];
   }
 
+  if (isset($_GET['orderRecieved'])) {
+    $query->insertSales($_GET['orderRecieved']);
+    $query->deleteOrder($_GET['orderRecieved']);
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -196,7 +201,7 @@
               <div class="quantity">
                 <span><?php echo $row['quantity']; ?></span>
               </div>
-              <button class="received-btn">Received</button>
+              <button class="received-btn" onclick="location.href='<?php echo $_SERVER['PHP_SELF'] . '?orderRecieved=' . $row['orderID'] ?>'">Received</button>
             </li>
 
           <?php } ?>
