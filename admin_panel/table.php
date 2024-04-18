@@ -1,60 +1,23 @@
 <?php
     session_start();
-    require("backend.php");
+
+    require_once("backend.php");
+    $connect = new Connect_db();
+    $query = new Queries($connect);
     
     $connect = new Connect_db();
     $query = new Queries($connect);
     
-    // if (isset($_POST['submit'])) {
-    //     $productName = $_POST['product-name'];
-    //     $productType = $_POST['product-type'];
-    //     $productPrice = $_POST['product-price'];
-    //     $aboutProduct = $_POST['about-product'];
-    //     $uploadedFiles = $_FILES["product-image"];
-    //     $bodymaterial = $_POST['bodymaterial'];
-    //     $bodyfinish = $_POST['bodyfinish'];
-    //     $fretboardmaterial = $_POST['fretboardmaterial'];
-    //     $numoffrets = $_POST['numoffrets'];
-    //     $strings = $_POST['strings'];
-    
-    //     if ($uploadedFiles["error"] === 4) {
-    //         echo "<script> alert('Image does not exist.'); </script>";
-    //     } else {
-    //         $fileName = $uploadedFiles["name"];
-    //         $fileSize = $uploadedFiles["size"];
-    //         $tempName = $uploadedFiles["tmp_name"];
-    
-    //         $validImgExtension = ['jpg', 'jpeg', 'png'];
-    //         $imgExtension = explode(".", $fileName);
-    //         $imgExtension = strtolower(end($imgExtension));
-            
-    //         // Check file extension
-    //         if (!in_array($imgExtension, $validImgExtension)) {
-    //             echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
-    //         } elseif ($fileSize > 4000000) {
-    //             echo "<script> alert('Image is too large.'); </script>";
-    //         } else {
-    //             $newImgName = uniqid() . "." . $imgExtension;
-    //             $filePath = "productpics/" . $newImgName;
-    //             move_uploaded_file($tempName, $filePath);
-    
-    //             $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
-                
-    //             if ($query1->InsertProducts()) {
-    //                 header("Location: table.php?table=Products&insert=success");
-    //             }else {
-    //                 die("Error inserting data into database.");
-    //             }
-    //         }
-    //     }
-    // }
-    
+
     if (isset($_GET['deleteid'])) {
         $productId = $_GET['deleteid'];
             
         if ($query->deleteProduct($productId)) {
             header("Location: table.php?table=Products&deleted=Successfully_deleted_the_selected_item!");
         }
+    }
+    if (isset($_GET['shipOut'])) {
+        $query->updateStatus($_GET['shipOut']);
     }
 
 
@@ -189,7 +152,6 @@
                                     <th>Product Name</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
-                                    <th>Shipping Info.</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -255,10 +217,12 @@
                                         <td><?php echo $row['quantity'] ?></td>
                                         <td><?php echo $row['Pprice'] ?></td>
                                         <td>
-                                            <a href="view-specs.php?id=<?php echo $row['PID'] ?>"><ion-icon name="eye-outline"></a>
-                                        </td>
-                                        <td>
-                                            <a href="update-product.php?id=<?php echo $row['orderID'] ?>">Ship Out</a>
+                                            <?php if (isset($row['status']) && $row['status'] == 'pending') {
+                                                    echo "<a href='table.php?table=Orders&shipOut=".$row['orderID']."'>Ship Out</a>";
+                                            } else {
+                                                    echo "<span>Appoved</span>";
+                                                }
+                                            ?>
                                         </td>
                                     </tr>
                                 <?php } ?>

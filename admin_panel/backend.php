@@ -44,7 +44,7 @@
 
                     break;
                 case 'orders':
-                    $sql = "SELECT o.orderID, p.PID, a.name, p.Pname, o.quantity , p.Pprice
+                    $sql = "SELECT o.orderID, p.PID, a.name, p.Pname, o.quantity , p.Pprice, o.status
                             FROM orders AS o
                             INNER JOIN products as p
                             ON o.productID = p.PID
@@ -232,14 +232,15 @@
         // new funtion natin pang order and sales table
 
         public function insertOrder($accountID) {
-            $stmt = $this->connection->prepare("INSERT INTO `orders` (`productID`, `shippingID`, `accountID`,`quantity`)
-                                                SELECT p.PID, s.shippingID, ?, c.quantity
+            $status = 'pending';
+            $stmt = $this->connection->prepare("INSERT INTO `orders` (`productID`, `shippingID`, `accountID`, `quantity`, `status`)
+                                                SELECT p.PID, s.shippingID, ?, c.quantity, ?
                                                 FROM products as p
                                                 INNER JOIN cart as c
                                                 ON c.accountID = ?
                                                 INNER JOIN shipping as s
                                                 ON s.accountID = ?");
-                $stmt->bind_param( "iii", $accountID, $accountID, $accountID);
+                $stmt->bind_param( "isii", $accountID, $status, $accountID, $accountID);
                 $success = $stmt->execute();
                 return $success;
         }
@@ -248,7 +249,7 @@
             if (isset($_SESSION['UID'])) {
                 $accountID = $_SESSION['UID'];
             }
-            $stmt = $this->connection->prepare("SELECT o.orderID, p.Pimage, p.Pname, p.Pprice, o.quantity
+            $stmt = $this->connection->prepare("SELECT o.orderID, p.Pimage, p.Pname, p.Pprice, o.quantity, o.status
                                                 FROM orders as o
                                                 INNER JOIN products as p
                                                 ON o.productID = p.PID
@@ -303,6 +304,11 @@
             $stmt->execute();
             $result = $stmt->get_result()->fetch_assoc();
             return $result;
+        }
+
+        public function updateStatus($orderID) {
+            $stmt =  $this->connection->prepare("UPDATE `orders` SET `status`= 'approved' WHERE orderID = '$orderID'");
+            $stmt->execute();
         }
 
     }
