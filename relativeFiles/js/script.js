@@ -67,6 +67,28 @@ window.addEventListener("scroll", function () {
               $('#results').html(initialData);
           }
         });
+        
+        // search para sa mobile view
+        document.getElementById("search-mobile").addEventListener("input", function() {
+          var input = $(this).val();
+  
+          if (input != "") {
+              // If searching, clear the initial data
+              $('#results').html("");
+
+              $.ajax({
+                  url:"ajax-data/selectAllProd.php",
+                  method:"POST",
+                  data:{input:input},
+                  success:function(data)
+                  {
+                      $('#results').html(data);
+                  }
+              });
+          } else {
+              $('#results').html(initialData);
+          }
+        });
   });
 
 //filter category

@@ -23,6 +23,7 @@
             }else{
                 $_SESSION['type'] = 'user';
                 $_SESSION['UID'] = $row['accountID'];
+                $_SESSION['Uname'] = $row['name'];
                 header("Location: index.php?success=login_success");
             }
         }else {
