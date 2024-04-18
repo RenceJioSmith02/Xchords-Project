@@ -96,30 +96,30 @@
                                 </div>
                                 <br>
                                 <h3>About This Product</h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint minima mollitia, repellat sequi nesciunt, voluptatibus veritatis ratione corporis earum praesentium ab recusandae assumenda id aperiam quisquam soluta. Quos, doloribus voluptate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint minima mollitia, repellat sequi nesciunt, voluptatibus veritatis ratione corporis earum praesentium ab recusandae assumenda id aperiam quisquam soluta. Quos, doloribus voluptate.
-                                </p>
+
+                                <p> <?php echo $row['Pdescription'] ?> </p>
+
                                 <h3>Specification</h3>
                                 <ul>
                                     <li>
                                         <strong>Body Material:</strong>
-                                        <p>GA Cutaway</p>
+                                        <p><?php echo $row['bodymaterial'] ?></p>
                                     </li>
                                     <li>
                                         <strong>Body Finish:</strong>
-                                        <p>Satin</p>
+                                        <p><?php echo $row['bodyfinish'] ?></p>
                                     </li>
                                     <li>
                                         <strong>Number of Frets:</strong>
-                                        <p>Natural</p>
+                                        <p><?php echo $row['numoffrets'] ?></p>
                                     </li>
                                     <li>
                                         <strong>Fretboard Material:</strong>
-                                        <p>Purpleheart Wood</p>
+                                        <p><?php echo $row['fretboardmaterial'] ?></p>
                                     </li>
                                     <li>
                                         <strong>Strings:</strong>
-                                        <p>Elixir</p>
+                                        <p><?php echo $row['strings'] ?></p>
                                     </li>
                                 </ul>
                             </div>

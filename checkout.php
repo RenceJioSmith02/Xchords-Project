@@ -4,7 +4,7 @@
     $connect = new Connect_db();
     $query = new Queries($connect);
 
-    
+    $accountID =  $_SESSION['UID'];
 
     if (isset($_POST['save-btn'])) {
         $fullname = $_POST['fullname'];
@@ -13,11 +13,15 @@
         $city = $_POST['city'];
         $state = $_POST['state'];
         $zip_code = $_POST['zipcode'];
-        $accountID =  $_SESSION['UID'];
 
         $queryship = new ShippingInfo($connect, $fullname, $phonenum, $address, $city, $state, $zip_code,'','');
 
-        $result =  $queryship->insertShipDetails($accountID);
+        $addressExist = $query->Checkaddress($accountID);
+        if ($addressExist) {
+            $result =  $queryship->updateShipDetails($accountID);
+        } else {
+            $result =  $queryship->insertShipDetails($accountID);
+        }
 
         if ($result != 0) {
             $_SESSION['fkey'] = $result;
@@ -27,81 +31,46 @@
         
     }
 
-    if (isset($_SESSION['fkey'])) {
-
-        $fk = $_SESSION['fkey'];
-
         if (isset($_POST['order-btn'])) {
             $nameoncard = $_POST['nameoncard'];
             $cardnumber = $_POST['cardnum'];
             
             $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
             
-            $result = $querypay->insertPayment($fk);
+            $row = $query->getshippingID($_SESSION['UID']);
+            
+            $paymentExist = null;
+            if (isset($row['shippingID'])) {
+                $shippingID = $row['shippingID'];
+                $paymentExist = $query->Checkpayment($shippingID);
+            
+                if ($paymentExist) {
+                    $result = $querypay->updatePayment($shippingID);
+                } else {
+                    $result = $querypay->insertPayment($shippingID);
+                }
+            }
+            
+            $addressExist = $query->Checkaddress($accountID);
+            if ($addressExist) {
 
-            if ($result) {
-                header("location: products.php?msg=success");
+                $result = $query->insertOrder($accountID);
+               
+                if ($result) {
+                    header("location: products.php?msg=order_success");
+                } else {
+                    header("location: products.php?msg=order_failed");
+                }
+                
             }
             else {
-                header("location: checkout.php?msg=order_unsuccessful");
+                echo "<script>alert('plaese set up your address.')</script>";
             }
         }
 
-    }
-
-
-    //update  address information to the database
-    if (isset($_POST['update_address'])) {
-        $fullname = $_POST['fullname'];
-        $phonenum = $_POST['phonenum'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zip_code = $_POST['zipcode'];
-        $accountID =  $_SESSION['UID'];
-        // $_SESSION['updatekey'] = $_POST['ID'];
-
-
-        $queryship = new ShippingInfo($connect, $fullname, $phonenum, $address, $city, $state, $zip_code,'','');
-
-        $result =  $queryship->updateShipDetails($accountID);
-
-        if ($result != 0) {
-            header("location: checkout.php?msg=address_details_updated");
-        }else {
-            echo "<script> alert('Error in saving details'); </script>";
-        }
-    }
-
-    $getID = $query->getshippingID($_SESSION['UID']) ;
-
-    if ($getID) {
-        $_SESSION['updatekey'] = $getID['shippingID'];
-    }
-
-    if (isset($_SESSION['updatekey'])) {
-
-        if (isset($_POST['order-update'])) {
-            $nameoncard = $_POST['nameoncard'];
-            $cardnumber = $_POST['cardnum'];
-            
-            $querypay = new ShippingInfo($connect, '', '', '', '', '', '', $nameoncard, $cardnumber);
-            
-            $result = $querypay->updatePayment( $_SESSION['updatekey']);
-
-            if ($result) {
-                header("location: products.php?msg=Success_naba?");
-            }
-            else {
-                header("location: checkout.php?msg=order_unsuccessful");
-            }
-        }
-
-    }
-    
 
     
-    
+
 ?>
 
 <!DOCTYPE html>
@@ -147,15 +116,11 @@
             //     $userID = $_SESSION['userID'];
             // }
             $userID = 5;
-            $result = $query->Checkaddress($userID);
-
-            $row = $result;
-
-            $payID = 0;
+            $row = $query->Checkaddress($_SESSION['UID']);
 
             if (isset($row['shippingID'])) {
-                $payID = $row['shippingID']; 
-            } 
+                $payID = $row['shippingID'];
+            }
             
         ?>
         <div id="address-modal">
@@ -199,12 +164,7 @@
                             </div>
                         </div>
                         
-                        <input type="submit" value="SAVE"
-                            <?php if ($result) {
-                            echo 'name="update_address"';
-                        } else {
-                            echo 'name="save-btn"';
-                        }  ?> class="save-btn" id="save-btn"/>
+                        <input type="submit" value="SAVE" name="save-btn" class="save-btn" id="save-btn"/>
                     
 
                     </div>
@@ -218,17 +178,6 @@
     <!-- lower form -->
 
     <form action="" method="post">
-
-        <?php
-            // if (isset($_SESSION['userID'])) {
-            //     $userID = $_SESSION['userID'];
-            // }
-            $result1 = $query->Checkpayment($payID);
-
-            $row1 = $result1;
-
-        ?>
-
         <div class="row">
 
             <div class="col" style="margin-bottom: 20px;">
@@ -241,11 +190,11 @@
                 </div>
                 <div class="inputBox">
                     <span>name on card :</span>
-                    <input type="text" name="nameoncard" value="<?php if (isset($row1['nameoncard'])) echo $row1['nameoncard']; ?>" placeholder="Jhero Antonio" required>
+                    <input type="text" name="nameoncard" placeholder="Jhero Antonio" required>
                 </div>
                 <div class="inputBox">
                     <span>credit card number :</span>
-                    <input type="text" name="cardnum" value="<?php if (isset($row1['cardnumber'])) echo $row1['cardnumber']; ?>" placeholder="1111-2222-3333-4444" pattern="[0-9\-]*" title="Please enter numbers and dashes only" required>
+                    <input type="text" name="cardnum" placeholder="1111-2222-3333-4444" pattern="[0-9\-]*" title="Please enter numbers and dashes only" required>
                 </div>
 
             </div>
@@ -302,17 +251,7 @@
         }
     ?>
 
-        <input type="submit"  
-            <?php
-                if ($result1) {
-                    echo 'name="order-update"';
-                }else{
-                    echo 'name="order-btn"';
-                    
-                }
-            ?>
-        
-        value="ORDER NOW" class="order-btn">
+        <input type="submit" name="order-btn" value="ORDER NOW" class="order-btn">
 
     </form>
 

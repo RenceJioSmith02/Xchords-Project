@@ -1,14 +1,9 @@
-
-<!--  #HEADER -->
 <?php
 
-  // session_start();
-
-  require_once 'database.php';
-  // $database = new Database();
-  // $connection = $database->getConnection();
-
-  //  include 'cartData.php';
+  require_once './admin_panel/backend.php';
+  $connect = new Connect_db();
+  $query = new Queries($connect);
+  
   
   $toSearch = "";
   if (isset($_GET['search'])) {
@@ -179,43 +174,39 @@
         </ul>
       </nav>
 
-          <div id="popup-order" class="popup-order">
+      <?php
+        $result = $query->selectOrder();
+      ?>
 
-            <center><h2>orders</h2></center>
-            <ul class="orders-container">
+      <div id="popup-order" class="popup-order">
 
-              <li class="order-list">
-                
-                <div class="o-image">
-                  <img src="./relativeFiles/images/E-guitars/guitar1.png" alt="">
-                  <p>guitar 1</p>
-                </div>
+        <center><h2>Orders</h2></center>
 
-                <!-- <data value="<?php echo $row['Pprice'];?>">&#8369;<?php echo $row['Pprice'];?></data> -->
-                <div class="price">
-                  <p>&#8369;2000.00</p>
-                </div>
+        <ul class="orders-container">
+          <?php while ($row = mysqli_fetch_assoc($result)) { ?>
 
-                <div class="quantity">
-                  <span>x2</span>
-                </div>
+            <li class="order-list">
+              <div class="o-image">
+                <img src="<?php echo $row['Pimage']; ?>" alt="">
+                <p><?php echo $row['Pname']; ?></p>
+              </div>
+              <div class="price">
+                <p>&#8369;<?php echo $row['Pprice']; ?></p>
+              </div>
+              <div class="quantity">
+                <span><?php echo $row['quantity']; ?></span>
+              </div>
+              <button class="received-btn">Received</button>
+            </li>
 
-                <button class="recieved-btn">
-                  Recived
-                </button>
-              
-              </li>
+          <?php } ?>
+        </ul>
 
-              <li class="order-list">hellow</li>
-              <li class="order-list">world</li>
-            </ul>
+        <div class="order-close">
+          <button onclick="closePopup()">Close</button>
+        </div>
 
-            
-            <div class="order-close">
-              <button onclick="closePopup()">Close</button>
-            </div>
-
-          </div>
+      </div>
 
       <div id="overlay" class="overlay"></div>
 

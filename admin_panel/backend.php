@@ -165,7 +165,8 @@
             $query = "SELECT c.cartID, p.Pname, p.Pprice, p.Pimage, c.quantity
             FROM `cart` as c
             INNER JOIN `products` AS p
-            ON p.PID=c.PID";
+            ON p.PID=c.PID
+            WHERE c.accountID = '".$_SESSION['UID']."'";
 
             $stmt = $this->connection->prepare($query);
             $stmt->execute();
@@ -188,7 +189,11 @@
         }
 
         public function Searchproduct($toSearch){
-            $query = "SELECT * FROM `products` WHERE `Pname` LIKE '%$toSearch%'";
+            $query = "SELECT * 
+            FROM `products` as p
+            INNER JOIN specs as s
+            ON s.productID = p.PID
+            WHERE p.Pname LIKE '%$toSearch%'";
 
             $stmt = $this->connection->prepare($query);
             $stmt->execute();
@@ -207,7 +212,7 @@
 
         public function Checkpayment($payID){
             $stmt = $this->connection->prepare("SELECT * FROM payment WHERE shippingID = ?");
-            $stmt-> bind_param('s', $payID);
+            $stmt-> bind_param('i', $payID);
             $stmt-> execute();
             $res = $stmt-> get_result()-> fetch_assoc();
             return $res;
@@ -215,12 +220,43 @@
 
         public  function getshippingID($accountID){
 
-            $stmt = $this->connection->prepare("SELECT * FROM `shipping` WHERE `accountID`=?");
+            $stmt = $this->connection->prepare("SELECT shippingID FROM `shipping` WHERE `accountID`=?");
                 $stmt->bind_param( "i",  $accountID );
                 $stmt->execute();
                 $result_select = $stmt->get_result()->fetch_assoc();
                 return $result_select;
+        }
+
+        public function insertOrder($accountID) {
+            $stmt = $this->connection->prepare("SELECT p.PID, c.quantity, s.shippingID
+                                                FROM products as p
+                                                INNER JOIN cart as c
+                                                ON c.accountID = ?
+                                                INNER JOIN shipping as s
+                                                ON s.accountID = ?");
+                $stmt->bind_param( "ii",  $accountID, $accountID);
+                $stmt->execute();
+                $row = $stmt->get_result()->fetch_assoc();
                 
+            $stmt =  $this->connection->prepare("INSERT INTO `orders` (`productID`, `shippingID`, `accountID`,`quantity`) VALUES(?,?,?,?)");
+        
+                $stmt->bind_param("isis", $row['PID'], $row['shippingID'], $accountID, $row['quantity']);
+                $success = $stmt->execute();
+                return $success;
+        }
+        public function selectOrder() {
+            if (isset($_SESSION['UID'])) {
+                $accountID = $_SESSION['UID'];
+            }
+            $stmt = $this->connection->prepare("SELECT p.Pimage, p.Pname, p.Pprice, o.quantity
+                                                FROM orders as o
+                                                INNER JOIN products as p
+                                                ON o.productID = p.PID
+                                                WHERE o.accountID = ?");
+            $stmt->bind_param( "i",  $accountID );
+            $stmt->execute();
+            $result_select = $stmt->get_result();
+            return $result_select;
         }
 
 
@@ -362,18 +398,19 @@
         private $address;
         private $city;
         private $state;
-        private $zip_code;
+        private $postalcode;
+
         private $nameoncard;
         private $cardnumber;
     
-        public function __construct(Connect_db $connect, $fullname, $phonenum, $address, $city, $state, $zip_code, $nameoncard, $cardnumber) {
+        public function __construct(Connect_db $connect, $fullname, $phonenum, $address, $city, $state, $postalcode, $nameoncard, $cardnumber) {
             $this->connection = $connect->getConn();
             $this->fullname = $fullname;
             $this->phonenum = $phonenum;
             $this->address = $address;
             $this->city = $city;
             $this->state = $state;
-            $this->zip_code = $zip_code;
+            $this->postalcode = $postalcode;
             $this->nameoncard = $nameoncard;
             $this->cardnumber = $cardnumber; 
         }
@@ -381,7 +418,7 @@
         public function insertShipDetails($accountID){
 
             $stmt = $this->connection->prepare("INSERT INTO `shipping`(`fullname`, `phonenum`, `address`, `city`, `state`, `postalcode`, `accountID`) VALUES(?,?,?,?,?,?,?)");
-            $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->zip_code, $accountID);
+            $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->postalcode, $accountID);
             $result = $stmt->execute();
 
             if ($result) {
@@ -395,7 +432,7 @@
         public function updateShipDetails($accountID){
 
             $stmt = $this->connection->prepare("UPDATE `shipping` SET `fullname`= ?,`phonenum`= ?,`address`= ?,`city`= ?,`state`= ?,`postalcode`= ? WHERE `accountID` = ?");
-            $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->zip_code, $accountID);
+            $stmt->bind_param("sisssii" , $this->fullname, $this->phonenum, $this->address, $this->city, $this->state, $this->postalcode, $accountID);
             $result = $stmt->execute();
 
             if ($result) {
