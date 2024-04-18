@@ -622,6 +622,7 @@ h3 > a { color: inherit; }
   border-radius: 6px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
+  overflow: hidden;
 }
 .popup-order .order-close {
   position: inherit;
@@ -634,7 +635,8 @@ h3 > a { color: inherit; }
   flex-direction: column;
   gap: 8px;
   margin-top: 10px;
-
+  overflow: scroll;
+  height: 390px;
   width: 100%;
 }
 

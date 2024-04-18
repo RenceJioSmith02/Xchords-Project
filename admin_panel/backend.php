@@ -44,12 +44,13 @@
 
                     break;
                 case 'orders':
-                    $sql = "SELECT o.orderID, p.PID, a.name, p.Pname, c.quantity , p.Pprice 
-                    FROM orders AS o
-                        JOIN accounts AS a ON o.accountID = a.accountID
-                            JOIN cart as c ON c.accountID = a.accountID
-                            JOIN products AS p ON  c.PID = p.PID
-                                ORDER BY o.productID ASC LIMIT  ?, ?";
+                    $sql = "SELECT o.orderID, p.PID, a.name, p.Pname, o.quantity , p.Pprice
+                            FROM orders AS o
+                            INNER JOIN products as p
+                            ON o.productID = p.PID
+                            INNER JOIN accounts AS a
+                            ON o.accountID = a.accountID
+                            ORDER BY o.orderID ASC LIMIT  ?, ?";
                     break;
                 case 'sales':
                     $sql = "SELECT * FROM sales
