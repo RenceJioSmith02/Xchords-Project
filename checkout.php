@@ -55,9 +55,16 @@
             if ($addressExist) {
 
                 $result = $query->insertOrder($accountID);
-               
+            
                 if ($result) {
-                    header("location: products.php?msg=order_success");
+
+                    $result = $query->deleteCart($accountID);
+                    if ($result) {
+                        header("location: products.php?msg=order_success");
+                    }else {
+                        header("location: products.php?msg=order_failed");
+                    }
+
                 } else {
                     header("location: products.php?msg=order_failed");
                 }
