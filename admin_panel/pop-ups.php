@@ -175,6 +175,7 @@
                         <div class="inputBox">
                             <span>Category:</span>
                             <select name="product-type" id="product-type">
+                                <option value="0">Category</option>
                                 <option value="1">ACOUSTIC</option>
                                 <option value="2">ELECTRIC</option>
                                 <option value="3">BASS</option>
@@ -254,12 +255,12 @@
                         </div>
 
                         <div class="inputBox">
-                            <span>Category:</span>
-                            <select name="product-type" id="product-type">
-                                <option value="1">ACOUSTIC</option>
-                                <option value="2">ELECTRIC</option>
-                                <option value="3">BASS</option>
-                                <option value="4">UKALELE</option>
+                        <span>Category:</span>
+                            <select name="product-type">
+                                <option value="1" <?php if ($row['CID'] == '1') echo 'selected'; ?>>ACOUSTIC</option>
+                                <option value="2" <?php if ($row['CID'] == '2') echo 'selected'; ?>>ELECTRIC</option>
+                                <option value="3" <?php if ($row['CID'] == '3') echo 'selected'; ?>>BASS</option>
+                                <option value="4" <?php if ($row['CID'] == '4') echo 'selected'; ?>>UKALELE</option>
                             </select>
                         </div>
 
@@ -329,7 +330,7 @@
                     <div class="col" style="width: 950px; margin-bottom: 20px;">
                         <h3 class="title">Specification</h3>
 
-                        <?php while ($row = mysqli_fetch_assoc($row1)) : ?>
+                        <?php $row = mysqli_fetch_assoc($row1)  ?>
                             <div class="inputBox">
                                 <span>Body Material:</span>
                                 <input type="text" id="bodymaterial" name="bodymaterial" value="<?php echo $row['bodymaterial']; ?>" readonly required>
@@ -355,7 +356,7 @@
                                 <input type="text" id="strings" name="strings" value="<?php echo $row['strings']; ?>" readonly required>
                             </div>
                             
-                        <?php endwhile; ?>
+                        
 
                     </div>
 

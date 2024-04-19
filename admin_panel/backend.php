@@ -149,7 +149,7 @@
         }
 
         public function selectAll($tablename,$id) {
-            $query="SELECT * FROM ".$tablename." WHERE productID=?";
+            $query="SELECT * FROM ".$tablename." WHERE specsID = ?";
             $stmt =  $this->connection->prepare($query);
             $stmt->bind_param('i',$id);
             $stmt->execute();
@@ -159,7 +159,11 @@
         }
 
         public function printUpdateproducts($id){
-            $stmt = $this->connection->prepare("SELECT * FROM products JOIN specs ON products.PID= specs.productID WHERE products.PID = ?");
+            $stmt = $this->connection->prepare("SELECT * 
+                                                FROM specs as s
+                                                INNER JOIN products as p
+                                                ON s.productID = p.PID
+                                                WHERE s.specsID = ?");
             $stmt->bind_param('i', $id);
             $stmt->execute();
             $results = $stmt->get_result();
@@ -465,9 +469,9 @@
             $result = $stmt->execute();
         
             if ($result) {
-                $stmt = $this->connection->prepare("UPDATE `specs` SET `bodymaterial`=?, `bodyfinish`=?, `fretboardmaterial`=?, `numoffrets`=?, `strings`=? WHERE `specsID`= ?");
-                $stmt->bind_param("sssisi", $this->bodymaterial, $this->bodyfinish, $this->fretboardmaterial, $this->numoffrets, $this->strings, $id);
-                $success = $stmt->execute();
+                $stmt1 = $this->connection->prepare("UPDATE `specs` SET `bodymaterial`= ?, `bodyfinish`= ?, `fretboardmaterial`= ?, `numoffrets`= ?, `strings`= ? WHERE `productID`= ?");
+                $stmt1->bind_param("sssisi", $this->bodymaterial, $this->bodyfinish, $this->fretboardmaterial, $this->numoffrets, $this->strings, $id);
+                $success = $stmt1->execute();
 
                 if ($success) {
                     return $success;
