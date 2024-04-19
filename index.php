@@ -9,6 +9,9 @@
     session_destroy();
     header("Location: index.php");
   }
+  if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
+    header("Location: ./admin_panel/admin.php");
+  }
 
   // if ($query->checkUserExist($_SESSION['UID']) <= 0) {
   //   session_destroy();
@@ -24,10 +27,6 @@
   //     header("Location: index.php");
   //   }
   // }
-
-  if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
-    header("Location: ./admin_panel/admin.php");
-  }
 
   if (isset( $_GET["logout"])) {
     session_destroy();

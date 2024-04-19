@@ -2,6 +2,15 @@
 
   session_start();
 
+  if (isset($_SESSION['UID']) && ($query->checkUserExist($_SESSION['UID']) <= 0)) {
+    session_destroy();
+    header("Location: index.php");
+  }
+  
+  if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
+      header("Location: ./admin_panel/admin.php");
+  }
+
   include 'login/login.php'; 
   include 'header&footer/header.php';
 

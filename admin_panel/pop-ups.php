@@ -1,56 +1,14 @@
 <?php
 
     session_start();
+
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+        header("Location: ../index.php");
+    }
     require("backend.php");
 
     $connect = new Connect_db();
     $query = new Queries($connect);
-
-
-    // add product
-    // if (isset($_POST['submit'])) {
-    //     $productName = $_POST['product-name'];
-    //     $productType = $_POST['product-type'];
-    //     $productPrice = $_POST['product-price'];
-    //     $aboutProduct = $_POST['about-product'];
-    //     $uploadedFiles = $_FILES["product-image"];
-    //     $bodymaterial = $_POST['bodymaterial'];
-    //     $bodyfinish = $_POST['bodyfinish'];
-    //     $fretboardmaterial = $_POST['fretboardmaterial'];
-    //     $numoffrets = $_POST['numoffrets'];
-    //     $strings = $_POST['strings'];
-    
-    //     if ($uploadedFiles["error"] === 4) {
-    //         echo "<script> alert('Image does not exist.'); </script>";
-    //     } else {
-    //         $fileName = $uploadedFiles["name"];
-    //         $fileSize = $uploadedFiles["size"];
-    //         $tempName = $uploadedFiles["tmp_name"];
-    
-    //         $validImgExtension = ['jpg', 'jpeg', 'png'];
-    //         $imgExtension = explode(".", $fileName);
-    //         $imgExtension = strtolower(end($imgExtension));
-            
-    //         // Check file extension
-    //         if (!in_array($imgExtension, $validImgExtension)) {
-    //             echo "<script> alert('$imgExtension Invalid image extension.'); </script>";
-    //         } elseif ($fileSize > 4000000) {
-    //             echo "<script> alert('Image is too large.'); </script>";
-    //         } else {
-    //             $newImgName = uniqid() . "." . $imgExtension;
-    //             $filePath = "./relativeFiles/images/productpics/" . $newImgName;
-    //             move_uploaded_file($tempName, $filePath);
-    
-    //             $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filePath, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
-                
-    //             if ($query1->InsertProducts()) {
-    //                 header("Location: table.php?table=Products&insert=success");
-    //             }else {
-    //                 die("Error inserting data into database.");
-    //             }
-    //         }
-    //     }
-    // }
 
     // update
     if (isset($_POST['update'])) {
