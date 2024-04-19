@@ -23,8 +23,6 @@
                     INNER JOIN products as p
                     ON c.PID = p.PID
                     WHERE p.Pname = '$productName' AND c.accountID = '".$_SESSION['UID']."'";
-        
-        echo $query;
                     
         $result = mysqli_query($connection, $query);
         $row = mysqli_fetch_assoc($result);
@@ -74,7 +72,7 @@
         mysqli_query($connection, $query);
     }
 
-        $query = "SELECT p.*, c.* 
+        $query = "SELECT p.*, c.*
                     FROM `cart` as c
                     INNER JOIN products as p
                     ON c.PID = p.PID
@@ -109,7 +107,7 @@
                     </button>
                 </li>
             <?php    
-            }       
+            }
             echo "</ul>";
 
                 // Calculate total

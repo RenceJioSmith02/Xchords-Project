@@ -13,11 +13,18 @@
         $productId = $_GET['deleteid'];
             
         if ($query->deleteProduct($productId)) {
-            header("Location: table.php?table=Products&deleted=Successfully_deleted_the_selected_item!");
+            header("Location: table.php?table=Products&msg=Successfully_deleted_the_selected_item!");
         }
     }
     if (isset($_GET['shipOut'])) {
         $query->updateStatus($_GET['shipOut']);
+    }
+
+    if (isset($_GET['deleteAcc'])) {
+        if ($query->deleteAccount($_GET['deleteAcc'])) {
+            // $query->deleteOrder($orderID);
+            header("Location: table.php?table=Users&msg=Successfully_deleted_the_selected_account!");
+        }
     }
 
 
@@ -241,7 +248,7 @@
                                         <td><?php echo $row['email'] ?></td>
                                         <td><?php echo $row['created_at'] ?></td>
                                         <td>
-                                            <a href="users-table.php?deleteid=<?php echo $row['accountID'] ?>" onclick="return confirm('Are you sure you want to delete this product?')"><ion-icon name="trash"></ion-icon></a>
+                                            <a href="table.php?table=users&deleteAcc=<?php echo $row['accountID'] ?>" onclick="return confirm('Are you sure you want to delete this account?')"><ion-icon name="trash"></ion-icon></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

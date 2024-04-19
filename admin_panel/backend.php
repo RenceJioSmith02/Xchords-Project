@@ -92,8 +92,7 @@
                     # code...
                     break;
             }
-            
-
+        
             $stmt  = $this->connection->prepare($sql);
 
             $stmt->bind_param("ii", $start, $limit);
@@ -245,33 +244,6 @@
                 return $success;
         }
 
-        public function deleteCart($accountID){
-            $stmt = $this->connection->prepare("SELECT DISTINCT productID FROM `orders` WHERE `accountID`=?");
-            $stmt->bind_param("i", $accountID);
-            $stmt->execute();
-            $result_select = $stmt->get_result();
-        
-            $productIDs = [];
-            while ($row = $result_select->fetch_assoc()) {
-                $productIDs[] = $row['productID'];
-            }
-        
-            if (!empty($productIDs)) {
-
-                $placeholders = implode(',', array_fill(0, count($productIDs), '?'));
-        
-                $stmt = $this->connection->prepare("DELETE FROM `cart` WHERE `PID` IN ($placeholders) AND `accountID`=?");
-                
-                $types = str_repeat('i', count($productIDs) + 1); 
-                $bindParams = array_merge([$types], $productIDs, [$accountID]);
-                call_user_func_array([$stmt, 'bind_param'], $bindParams);
-        
-                $stmt->execute();
-            }
-        }
-        
-        
-
         public function selectOrder() {
             if (isset($_SESSION['UID'])) {
                 $accountID = $_SESSION['UID'];
@@ -337,6 +309,24 @@
             $stmt =  $this->connection->prepare("UPDATE `orders` SET `status`= 'approved' WHERE orderID = '$orderID'");
             $stmt->execute();
         }
+
+        // session account checker
+        public function checkUserExist($accountID) {
+            $stmt = $this->connection->prepare("SELECT DISTINCT COUNT(*) AS total FROM accounts WHERE accountID=?");
+            $stmt->bind_param("i", $accountID); 
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            
+            return $row["total"];
+        }
+        
+
+        public function deleteAccount($accountID) {
+            $stmt_delete = $this->connection->prepare("DELETE FROM accounts WHERE accountID = ?");
+            $stmt_delete->bind_param("i", $accountID);
+            $stmt_delete->execute();
+        }
+        
 
     }
 

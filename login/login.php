@@ -24,7 +24,7 @@
                 $_SESSION['type'] = 'user';
                 $_SESSION['UID'] = $row['accountID'];
                 $_SESSION['Uname'] = $row['name'];
-                header("Location: index.php?success=login_success");
+                header("Location: index.php?msg=login_success");
             }
         }else {
             echo "<script>alert('Invalid email or password!')</script>";
@@ -40,11 +40,11 @@
             $query = new Accounts($connect,$name, $email, $password);
 
             if ($query->checkIfUserExists()) {
-                header("Location: sign_in.php?error=email_exist");
+                header("Location: index.php?error=email_exist");
             }
             else {
                 if ($query->createAccount() ) {
-                    header("Location: index.php?success=account_created");
+                    header("Location: index.php?msg=account_created");
                 }
             }
         }

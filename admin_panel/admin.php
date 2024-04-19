@@ -1,4 +1,6 @@
     <?php
+        session_start();
+
         require("backend.php");
         $connect = new Connect_db();
         $query = new Queries($connect);

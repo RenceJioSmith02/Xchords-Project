@@ -1,7 +1,12 @@
 <?php
+    session_start();
+    
     require_once "./admin_panel/backend.php";
     $connect = new Connect_db();
     $query = new Queries($connect);
+
+    include 'login/login.php'; 
+    include 'header&footer/header.php';
 
     $toSearch="";
     if (isset($_GET['searchBtn'])) {
@@ -10,6 +15,7 @@
     } elseif (isset($_GET['Pname'])) {
         $toSearch = $_GET['Pname'];
     }
+
     $result = $query->Searchproduct($toSearch);
     $num_rows =  mysqli_num_rows($result);
 
@@ -39,11 +45,6 @@
 </head>
 <body>
 
-    <!-- #HEADER -->
-    <?php include 'header&footer/header.php'; ?>
-    <?php include 'login/login.php'; ?>
-
-
     <!-- #PRODUCT-->
     <section class="section product">
         <div class="container">
@@ -62,14 +63,14 @@
                             <div class="box-detail image">
                                 <img src="<?php echo $row['Pimage'] ?>" alt="guitar1" loading="guitar1" class="img">
                                 <div class="box-specs">
-                                    <button class="">
+                                    <!-- <button class="">
                                         <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                                         <p>Add to Cart</p>
-                                    </button>
+                                    </button> -->
 
 
                                     <!-- cart btn -->
-                                    <button 
+                                    <button
                                     <?php 
                                         if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
                                             echo "class='btn btn-outline add-to-cart'";
@@ -148,8 +149,6 @@
         <!-- ajax -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-
-
         <!-- 
             - custom js link
         -->
@@ -157,7 +156,7 @@
         <script src="./relativeFiles/js/login.js"></script>
 
         <!-- 
-            - ionicon link
+            - ionicon
         -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

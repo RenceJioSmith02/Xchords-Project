@@ -251,12 +251,7 @@
 
     function openPopup(action) {
       var title, content;
-      if (action === 'orders') {
-        
-
-        // document.getElementById('popupTitle').innerText = title;
-        // document.getElementById('popupContent').innerText = content;
-        
+      if (action === 'orders') {        
         document.getElementById('popup-order').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
 
