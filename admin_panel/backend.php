@@ -104,7 +104,15 @@
         }
 
         public  function getTotalRows($tablename){
-            $stmt = $this->connection->prepare("SELECT COUNT(*) AS total FROM products");
+            $stmt = $this->connection->prepare("SELECT COUNT(*) AS total FROM sales");
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            
+            return $row["total"];
+        }
+
+        public  function getTotalRows1($table){
+            $stmt = $this->connection->prepare("SELECT COUNT(*) AS total FROM " . $table);
             $stmt->execute();
             $row = $stmt->get_result()->fetch_assoc();
             
