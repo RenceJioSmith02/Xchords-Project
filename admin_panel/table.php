@@ -256,7 +256,7 @@
                                         <td><?php echo $row['Pprice'] ?></td>
                                         <td>
                                             <?php if (isset($row['status']) && $row['status'] == 'pending') {
-                                                    echo "<a href='table.php?table=Orders&shipOut=".$row['orderID']."'>Ship Out</a>";
+                                                    echo "<a href='table.php?table=Orders&shipOut=".$row['orderID']."'><ion-icon name='checkmark-done-outline'></ion-icon></a>";
                                             } else {
                                                     echo "<span>Appoved</span>";
                                                 }
@@ -293,7 +293,7 @@
                                     <td><?php echo $row['Pname'] ?></td>
                                     <td><?php echo $row['category'] ?></td>
                                     <td><?php echo $row['Pprice'] ?></td>
-                                    <td class="description"><?php echo $row['Pdescription'] ?></td>
+                                    <td><p class="description"><?php echo $row['Pdescription'] ?></p></td>
                                     <td>
                                         
                                         <a href="pop-ups.php?pop=viewSpecs&id=<?php echo $row['PID'] ?>"><ion-icon name="eye-outline"></a>
