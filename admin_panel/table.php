@@ -196,7 +196,7 @@
 
                             <?php while ($row = mysqli_fetch_assoc($rows)){  ?>
                                 <tr>
-                                    <td><?php echo $count++ ?></td>
+                                    <td><?php echo ++$count ?></td>
                                     <td><?php echo $row['Pname'] ?></td>
                                     <td><?php echo $row['category'] ?></td>
                                     <td><?php echo $row['Pprice'] ?></td>
@@ -231,7 +231,7 @@
                             <tbody id="results">
                                 <?php while ($row = mysqli_fetch_assoc($rows)){  ?>
                                     <tr>
-                                        <td><?php echo $count++ ?></td>
+                                        <td><?php echo ++$count ?></td>
                                         <td><?php echo $row['name'] ?></td>
                                         <td><?php echo $row['Pname'] ?></td>
                                         <td><?php echo $row['quantity'] ?></td>
@@ -256,7 +256,7 @@
                                 ?>
                                     <tr>
                                         
-                                        <td><?php echo $count++ ?></td>
+                                        <td><?php echo ++$count ?></td>
                                         <td><?php echo $row['name'] ?></td>
                                         <td><?php echo $row['email'] ?></td>
                                         <td><?php echo $row['created_at'] ?></td>

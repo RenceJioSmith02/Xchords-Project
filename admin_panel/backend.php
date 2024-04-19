@@ -118,6 +118,14 @@
             return $row["total"];
         }
 
+        public  function getTotalRows2($primarykey){
+            $stmt = $this->connection->prepare("SELECT COUNT(*) AS total FROM products WHERE CID = $primarykey ");
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            
+            return $row["total"];
+        }
+
         public function deleteProduct($productId)
         {
             $stmt_select = $this->connection->prepare("SELECT Pimage FROM products WHERE PID = ?");
@@ -241,12 +249,11 @@
         public function insertOrder($accountID) {
             $status = 'pending';
             $stmt = $this->connection->prepare("INSERT INTO `orders` (`productID`, `shippingID`, `accountID`, `quantity`, `status`)
-                                                SELECT p.PID, s.shippingID, ?, c.quantity, ?
-                                                FROM products as p
-                                                INNER JOIN cart as c
-                                                ON c.accountID = ?
+                                                SELECT DISTINCT c.PID, s.shippingID, ?, c.quantity, ?
+                                                FROM cart as c
+                                                INNER JOIN products as p
                                                 INNER JOIN shipping as s
-                                                ON s.accountID = ?");
+                                                WHERE c.accountID = ? && s.accountID = ?");
                 $stmt->bind_param( "isii", $accountID, $status, $accountID, $accountID);
                 $success = $stmt->execute();
                 return $success;
