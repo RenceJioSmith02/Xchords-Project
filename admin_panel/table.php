@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+        header("Location: ../index.php");
+    }
 
     require_once("backend.php");
     
@@ -253,7 +256,7 @@
                                         <td><?php echo $row['email'] ?></td>
                                         <td><?php echo $row['created_at'] ?></td>
                                         <td>
-                                            <a href="table.php?table=users&deleteAcc=<?php echo $row['accountID'] ?>" onclick="return confirm('Are you sure you want to delete this account?')"><ion-icon name="trash"></ion-icon></a>
+                                            <a href="table.php?table=Users&deleteAcc=<?php echo $row['accountID'] ?>" onclick="return confirm('Are you sure you want to delete this account?')"><ion-icon name="trash"></ion-icon></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

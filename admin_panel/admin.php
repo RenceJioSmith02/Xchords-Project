@@ -1,5 +1,9 @@
     <?php
-        session_start();
+      session_start();
+
+      if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
+        header("Location: ../index.php");
+      }
 
         require("backend.php");
         $connect = new Connect_db();
@@ -49,17 +53,18 @@
     $earnings = $query->totalEarning();
     $users = $query->totalUsers();
 
-    $acoustic = $query->updateSalesChart (1);
-    $electric = $query->updateSalesChart (2);
-    $bass = $query->updateSalesChart (3);
-    $ukalele = $query->updateSalesChart (4);
+    if ($acoustic = $query->updateSalesChart (1) &&
+        $electric = $query->updateSalesChart (2) &&
+        $bass = $query->updateSalesChart (3) &&
+        $ukalele = $query->updateSalesChart (4)) {
 
     $total_catergory = $acoustic + $electric + $bass + $ukalele;
 
     $acoustic = ($acoustic / $total_catergory) * 100;
     $electric = ($electric / $total_catergory) * 100;
     $bass = ($bass / $total_catergory) * 100;
-    $ukalele = ($ukalele / $total_catergory) * 100;
+    $ukalele = ($ukalele / $total_catergory) * 100;  
+   }
   
   ?>
 

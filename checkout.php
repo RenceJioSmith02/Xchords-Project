@@ -4,6 +4,15 @@
     $connect = new Connect_db();
     $query = new Queries($connect);
 
+    if (isset($_SESSION['UID']) && ($query->checkUserExist($_SESSION['UID']) <= 0)) {
+        session_destroy();
+        header("Location: index.php");
+    }
+
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
+        header("Location: ./admin_panel/admin.php");
+    }
+
     $accountID =  $_SESSION['UID'];
 
     if (isset($_POST['save-btn'])) {
