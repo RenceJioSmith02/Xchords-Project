@@ -189,7 +189,20 @@
       </main>
       </div>
 
-    </div>
+          <div class="pagination">
+          <?php if ($page > 1): ?>
+              <a href="?page=<?php echo $prev; ?>">Previous</a>
+          <?php endif; ?>
+
+          <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+              <a <?php if ($i == $page) echo 'class="active"'; ?> href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+          <?php endfor; ?>
+
+          <?php if ($page < $totalPages): ?>
+              <a href="?page=<?php echo $next; ?>">Next</a>
+          <?php endif; ?>
+      </div>
+
   </section>
 
   <!-- <section class="section-panel">

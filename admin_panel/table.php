@@ -2,8 +2,6 @@
     session_start();
 
     require_once("backend.php");
-    $connect = new Connect_db();
-    $query = new Queries($connect);
     
     $connect = new Connect_db();
     $query = new Queries($connect);
@@ -38,26 +36,33 @@
 
 
     if (isset($_GET['table']) && $_GET['table'] == 'Products') {
+        $table = "products";
         $tablename = "products";
         $primarykey = "PID";
     } elseif (isset($_GET['table']) && $_GET['table'] == 'Orders') {
+        $table = "orders";
         $tablename = "orders";
         $primarykey = "orderID";
     } elseif (isset($_GET['table']) && $_GET['table'] == 'Users') {
+        $table = "accounts";
         $tablename = "accounts";
         $primarykey = "accountID";
         
         //category 
     } elseif (isset($_GET['category']) && $_GET['category'] == 'Acoustic') {
+        $table = "products";
         $tablename = "acoustic";
         $primarykey = "1";
     } elseif (isset($_GET['category']) && $_GET['category'] == 'Electric') {
+        $table = "products";
         $tablename = "electric";
         $primarykey = "2";
     } elseif (isset($_GET['category']) && $_GET['category'] == 'Bass') {
+        $table = "products";
         $tablename = "bass";
         $primarykey = "3";
     } elseif (isset($_GET['category']) && $_GET['category'] == 'Ukalele') {
+        $table = "products";
         $tablename = "ukalele";
         $primarykey = "4";
     } 
@@ -67,7 +72,7 @@
         $rows = $result;
     }
     
-    $totalRows = $query->getTotalRows($tablename);
+    $totalRows = $query->getTotalRows1($table);
     $totalPages = ceil($totalRows / $limit);
     
     $prev = $page > 1 ? $page - 1 : null;
@@ -268,7 +273,7 @@
                                         <a href="pop-ups.php?pop=viewSpecs&id=<?php echo $row['PID'] ?>"><ion-icon name="eye-outline"></a>
 
                                     </td>
-                                    <td><img src="<?php echo $row['Pimage'] ?>" alt="Product Image" style="max-width: 100px;"></td>
+                                    <td><img src="<?php echo "." . $row['Pimage'] ?>" alt="Product Image" style="max-width: 100px;"></td>
                                     <td>
                                         <a href="pop-ups.php?pop=updateProduct&updateId=<?php echo $row['PID'] ?>"><ion-icon name="create-outline"></a>
                                         <a href="table.php?deleteid=<?php echo $row['PID'] ?>" onclick="return confirm('Are you sure you want to delete this product?')"><ion-icon name="trash"></ion-icon></a>
@@ -287,19 +292,19 @@
             </div>
             
             <div class="pagination">
-                    <?php if ($prev !== null): ?>
-                        <a href="?page=<?php echo $prev; ?>">Previous</a>
-                    <?php endif; ?>
-                    
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <a <?php if ($i == $page) echo 'class="active"'; ?> href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                    <?php endfor; ?>
+                <?php if ($prev !== null): ?>
+                    <a href="?page=<?php echo $prev; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>">Previous</a>
+                <?php endif; ?>
 
-                    <?php if ($next !== null): ?>
-                        <a href="?page=<?php echo $next; ?>">Next</a>
-                    <?php endif; ?>
-                </div>
-        </div>        
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a <?php if ($i == $page) echo 'class="active"'; ?> href="?page=<?php echo $i; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>"><?php echo $i; ?></a>
+                <?php endfor; ?>
+
+                <?php if ($next !== null): ?>
+                    <a href="?page=<?php echo $next; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>">Next</a>
+                <?php endif; ?>
+            </div>
+                
     </section>
 
 
