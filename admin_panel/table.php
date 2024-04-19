@@ -75,14 +75,19 @@
         $rows = $result;
     }
     
-    $totalRows = $query->getTotalRows1($table);
+    if (isset($_GET['category'])){
+        $totalRows = $query->getTotalRows2($primarykey);
+    }else {
+        $totalRows = $query->getTotalRows1($table);
+    }
+    
     $totalPages = ceil($totalRows / $limit);
     
     $prev = $page > 1 ? $page - 1 : null;
     $next = $page < $totalPages ? $page + 1 : null;
 
     $count = 0;
-    $count = ($page - 1) * $limit + 1;
+    $count += ($page - 1) * 5;
 
 ?>
 
