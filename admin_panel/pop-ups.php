@@ -61,7 +61,7 @@
         
                 if ($query->Update($id)) {
                     // header("Location: table.php?updated=spe". $oldimage);
-                    header("Location: table.php?table=Products");
+                    header("Location: table.php?table=Products&msg=itemUpdated");
                 } else {
                     echo "error";
                 }
@@ -123,7 +123,7 @@
                 $query1 = new Products($connect, $productName, $productType, $productPrice, $aboutProduct, $filepathName, $bodymaterial, $bodyfinish, $fretboardmaterial, $numoffrets, $strings);
                 
                 if ($query1->InsertProducts()) {
-                    header("Location: table.php?table=Products&insert=success");
+                    header("Location: table.php?table=Products&msg=itemAdded");
                 }else {
                     die("Error inserting data into database.");
                 }
@@ -175,7 +175,6 @@
                         <div class="inputBox">
                             <span>Category:</span>
                             <select name="product-type" id="product-type">
-                                <option value="0">Category</option>
                                 <option value="1">ACOUSTIC</option>
                                 <option value="2">ELECTRIC</option>
                                 <option value="3">BASS</option>

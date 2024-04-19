@@ -13,21 +13,6 @@
     header("Location: ./admin_panel/admin.php");
   }
 
-  // if ($query->checkUserExist($_SESSION['UID']) <= 0) {
-  //   session_destroy();
-  //   header("Location: index.php");
-  // }
-
-  // sessions
-  // if (isset($_SESSION['type']) && $_SESSION['type'] == 'user') {
-  //   if ($query->checkUserExist($_SESSION['UID']) > 0) {
-  //     header("Location: index.php?success=login_success");
-  //   } else {
-  //     session_destroy();
-  //     header("Location: index.php");
-  //   }
-  // }
-
   if (isset( $_GET["logout"])) {
     session_destroy();
     header("Location: index.php");

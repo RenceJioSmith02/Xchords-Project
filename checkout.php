@@ -35,7 +35,9 @@
         if ($result != 0) {
             $_SESSION['fkey'] = $result;
         }else {
-            echo "<script> alert('Error in saving details'); </script>";
+            $msg = "Error in saving details";
+            $icon = "warning";
+            Accounts::alertMessage($msg, $icon);
         }
         
     }
@@ -100,6 +102,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Include SweetAlert2 library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- <link rel="stylesheet" href="../relativeFiles/css/style.css"> -->
 

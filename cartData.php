@@ -2,6 +2,7 @@
 
     session_start();
 
+    require_once './admin_panel/backend.php';
     require_once 'database.php';
     $database = new Database();
     $connection = $database->getConnection();
@@ -10,8 +11,10 @@
         $productName = $_POST['productName'];
         addtoCart($productName, $connection);
 
-        echo " <script>alert('Item Added to data: $productName');</script>";
-
+        $msg = "Item Added Cart!";
+        $icon = "success";
+        Accounts::alertMessage($msg, $icon);
+        
     } elseif (isset($_POST['DeleteProductName'])) {
         $DeleteProductName = $_POST['DeleteProductName'];
         deletetoCart($DeleteProductName, $connection);

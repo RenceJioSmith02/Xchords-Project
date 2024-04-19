@@ -27,7 +27,9 @@
                 header("Location: index.php?msg=login_success");
             }
         }else {
-            echo "<script>alert('Invalid email or password!')</script>";
+            $msg = "Invalid email or password!";
+            $icon = "warning";
+            Accounts::alertMessage($msg, $icon);
         }
     }
 

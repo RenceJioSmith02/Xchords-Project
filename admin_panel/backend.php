@@ -391,6 +391,23 @@
             return $success;
         }
 
+        public static function alertMessage($msg, $icon) {
+            echo "
+                <script>
+                    Swal.fire({
+                        title: '$msg',
+                        icon: '$icon',
+                        timer: 3500,
+                        timerProgressBar: true,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false
+                    });
+                </script>
+            ";
+        }
+        
+
         
     }
 
@@ -558,10 +575,7 @@
         }
 
     }
-    
         
-
-
 ?>
 
 

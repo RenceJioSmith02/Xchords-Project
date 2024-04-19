@@ -20,6 +20,17 @@
     $productId = $_GET['btnProductId'];
   }
 
+  if (isset($_GET['msg']) && $_GET['msg']=='order_success') {
+    $msg = "Order Success!";
+    $icon = "success";
+    Accounts::alertMessage($msg, $icon);
+  }
+  if (isset($_GET['msg']) && $_GET['msg']=='order_failed') {
+    $msg = "Order Failed!";
+    $icon = "warning";
+    Accounts::alertMessage($msg, $icon);
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +51,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Include SweetAlert2 library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>

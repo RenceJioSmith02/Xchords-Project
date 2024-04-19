@@ -14,19 +14,18 @@
         $productId = $_GET['deleteid'];
             
         if ($query->deleteProduct($productId)) {
-            header("Location: table.php?table=Products&msg=Successfully_deleted_the_selected_item!");
+            header("Location: table.php?table=Products&msg=deleteItem");
         }
     }
+
+    if (isset($_GET['deleteAcc'])) {
+        $query->deleteAccount($_GET['deleteAcc']);
+    }
+
     if (isset($_GET['shipOut'])) {
         $query->updateStatus($_GET['shipOut']);
     }
 
-    if (isset($_GET['deleteAcc'])) {
-        if ($query->deleteAccount($_GET['deleteAcc'])) {
-            // $query->deleteOrder($orderID);
-            header("Location: table.php?table=Users&msg=Successfully_deleted_the_selected_account!");
-        }
-    }
 
 
     // query
@@ -89,6 +88,20 @@
     $count = 0;
     $count += ($page - 1) * 5;
 
+    if (isset($_GET['msg']) && $_GET['msg'] == 'itemAdded') {
+        echo "<script>alert('Item Added Successfully!')</script>";
+    }
+    if (isset($_GET['msg']) && $_GET['msg'] == 'itemUpdated') {
+        echo "<script>alert('Item Updated Successfully!')</script>";
+    }
+    if (isset($_GET['msg']) && $_GET['msg'] == 'deleteItem') {
+        echo "<script>alert('Item Deleted Successfully!')</script>";
+    }
+    if (isset($_GET['msg']) && $_GET['msg'] == 'deleteAcc') {
+        echo "<script>alert('Account Deleted Successfully!')</script>";
+    }
+    
+
 ?>
 
 
@@ -104,8 +117,13 @@
 
     <!-- Boxiocns CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <body>
+    <!-- Include SweetAlert2 library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- sidebar-header -->
   <?php include 'sidebar-header.php'; ?>
@@ -261,7 +279,7 @@
                                         <td><?php echo $row['email'] ?></td>
                                         <td><?php echo $row['created_at'] ?></td>
                                         <td>
-                                            <a href="table.php?table=Users&deleteAcc=<?php echo $row['accountID'] ?>" onclick="return confirm('Are you sure you want to delete this account?')"><ion-icon name="trash"></ion-icon></a>
+                                            <a href="table.php?table=Users&msg=deleteAcc&deleteAcc=<?php echo $row['accountID'] ?>" onclick="return confirm('Are you sure you want to delete this account?')"><ion-icon name="trash"></ion-icon></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

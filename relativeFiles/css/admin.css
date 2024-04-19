@@ -492,6 +492,7 @@ thead th{
   top: 0;
   left: 0;
   background-color: #d5d1defe;
+  z-index: 10;
 }
 tbody tr:nth-child(even){
   background-color: #0000000b;
