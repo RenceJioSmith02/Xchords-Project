@@ -66,14 +66,8 @@
                 $result = $query->insertOrder($accountID);
             
                 if ($result) {
-
-                    $result = $query->deleteCart($accountID);
-                    if ($result) {
-                        header("location: products.php?msg=order_success");
-                    }else {
-                        header("location: products.php?msg=order_failed");
-                    }
-
+                    $query->deleteCart($accountID);
+                    header("location: products.php?msg=order_success");
                 } else {
                     header("location: products.php?msg=order_failed");
                 }

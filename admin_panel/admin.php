@@ -52,18 +52,24 @@
     
     $earnings = $query->totalEarning();
     $users = $query->totalUsers();
-
-    if ($acoustic = $query->updateSalesChart (1) &&
-        $electric = $query->updateSalesChart (2) &&
-        $bass = $query->updateSalesChart (3) &&
+    
+    $acoustic = 0;
+    $electric = 0;
+    $bass = 0;
+    $ukalele = 0;
+    if ($acoustic = $query->updateSalesChart (1) ||
+        $electric = $query->updateSalesChart (2) ||
+        $bass = $query->updateSalesChart (3) ||
         $ukalele = $query->updateSalesChart (4)) {
 
-    $total_catergory = $acoustic + $electric + $bass + $ukalele;
+      if ( isset($acoustic) || isset($electric) || isset($bass) || isset($ukalele) ) {
+        $total_catergory = $acoustic + $electric + $bass + $ukalele;
+      }
 
-    $acoustic = ($acoustic / $total_catergory) * 100;
-    $electric = ($electric / $total_catergory) * 100;
-    $bass = ($bass / $total_catergory) * 100;
-    $ukalele = ($ukalele / $total_catergory) * 100;  
+      $acoustic = ($acoustic / $total_catergory) * 100;
+      $electric = ($electric / $total_catergory) * 100;
+      $bass = ($bass / $total_catergory) * 100;
+      $ukalele = ($ukalele / $total_catergory) * 100;  
    }
   
   ?>
@@ -150,7 +156,7 @@
       </div>
 
       <div class="box-container">
-        <main class="table">
+        <main class="table" id="table">
           <center><h3>Sales</h3></center>
   
           <div class="table-body">
@@ -190,32 +196,27 @@
               </table>
               
             </div>
+
+            <div class="pagination-container">
+              <div class="pagination">
+                  <?php if ($page > 1): ?>
+                      <a href="?page=<?php echo $prev; ?>">Previous</a>
+                  <?php endif; ?>
+
+                  <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                      <a <?php if ($i == $page) echo 'class="active"'; ?> href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                  <?php endfor; ?>
+
+                  <?php if ($page < $totalPages): ?>
+                      <a href="?page=<?php echo $next; ?>">Next</a>
+                  <?php endif; ?>
+              </div>
+            </div>
   
       </main>
       </div>
 
-          <div class="pagination">
-          <?php if ($page > 1): ?>
-              <a href="?page=<?php echo $prev; ?>">Previous</a>
-          <?php endif; ?>
-
-          <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-              <a <?php if ($i == $page) echo 'class="active"'; ?> href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-          <?php endfor; ?>
-
-          <?php if ($page < $totalPages): ?>
-              <a href="?page=<?php echo $next; ?>">Next</a>
-          <?php endif; ?>
-      </div>
-
   </section>
-
-  <!-- <section class="section-panel">
-    <div class="section-content">
-      content2
-    </div>
-  </section> -->
-
 
     
   <!-- side bar and pop-ups script -->

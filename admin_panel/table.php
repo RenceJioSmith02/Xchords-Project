@@ -291,21 +291,23 @@
                     
                     
                     </div>
+
+                    <div class="pagination-container">
+                        <div class="pagination">
+                            <?php if ($prev !== null): ?>
+                                <a href="?page=<?php echo $prev; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>">Previous</a>
+                            <?php endif; ?>
+
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <a <?php if ($i == $page) echo 'class="active"'; ?> href="?page=<?php echo $i; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>"><?php echo $i; ?></a>
+                            <?php endfor; ?>
+
+                            <?php if ($next !== null): ?>
+                                <a href="?page=<?php echo $next; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>">Next</a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </main>
-            </div>
-            
-            <div class="pagination">
-                <?php if ($prev !== null): ?>
-                    <a href="?page=<?php echo $prev; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>">Previous</a>
-                <?php endif; ?>
-
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a <?php if ($i == $page) echo 'class="active"'; ?> href="?page=<?php echo $i; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>"><?php echo $i; ?></a>
-                <?php endfor; ?>
-
-                <?php if ($next !== null): ?>
-                    <a href="?page=<?php echo $next; ?><?php if(isset($_GET['table'])) {echo '&table='.$_GET['table'];} ?><?php if(isset($_GET['category'])) {echo '&category='.$_GET['category'];} ?>">Next</a>
-                <?php endif; ?>
             </div>
                 
     </section>
@@ -315,9 +317,6 @@
 
   <!-- side bar and pop-ups script -->
     <script src="../relativeFiles/js/admin-pop.js"></script>
-
-    
-
 
     <!-- ionicons -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

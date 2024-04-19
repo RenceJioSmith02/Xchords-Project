@@ -547,9 +547,9 @@ td ion-icon {
 
 
 /* pagination */
-.pagination {
+.pagination-container {
   display: inline-block;
-  position: fixed;
+  position: relative;
   bottom: 5px;
   left: 50%;
   transform: translateX(-50%);

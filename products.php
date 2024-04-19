@@ -1,6 +1,8 @@
 <?php
-
   session_start();
+  require_once "./admin_panel/backend.php";
+  $connect = new Connect_db();
+  $query = new Queries($connect);
 
   if (isset($_SESSION['UID']) && ($query->checkUserExist($_SESSION['UID']) <= 0)) {
     session_destroy();
