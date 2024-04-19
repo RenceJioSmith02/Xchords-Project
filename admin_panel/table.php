@@ -200,7 +200,7 @@
                                     <td><?php echo $row['Pname'] ?></td>
                                     <td><?php echo $row['category'] ?></td>
                                     <td><?php echo $row['Pprice'] ?></td>
-                                    <td><?php echo $row['Pdescription'] ?></td>
+                                    <td class="description"><?php echo $row['Pdescription'] ?></td>
                                     <td>
                                         
                                         <a href="pop-ups.php?pop=viewSpecs&id=<?php echo $row['PID'] ?>"><ion-icon name="eye-outline"></ion-icon></a>
@@ -275,7 +275,7 @@
                                     <td><?php echo $row['Pname'] ?></td>
                                     <td><?php echo $row['category'] ?></td>
                                     <td><?php echo $row['Pprice'] ?></td>
-                                    <td><?php echo $row['Pdescription'] ?></td>
+                                    <td class="description"><?php echo $row['Pdescription'] ?></td>
                                     <td>
                                         
                                         <a href="pop-ups.php?pop=viewSpecs&id=<?php echo $row['PID'] ?>"><ion-icon name="eye-outline"></a>

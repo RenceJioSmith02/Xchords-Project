@@ -54,12 +54,16 @@
   display: block;
 }
 
-.shipping-container form .row .col .inputBox input{
+.shipping-container form .row .col .inputBox input,
+.shipping-container form .row .col .inputBox select{
   width: 100%;
   border:1px solid #ccc;
   padding:10px 15px;
   font-size: 15px;
   text-transform: none;
+}
+.shipping-container form .row .col .inputBox select{
+  background: none;
 }
 
 .shipping-container form .row .col .inputBox input:focus{
