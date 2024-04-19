@@ -655,6 +655,12 @@ h3 > a { color: inherit; }
   transition: var(--transition-1);
 }
 
+.order-list .product-name {
+  width: 60px; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
 .order-list .o-image {
   display: flex;
   justify-content: center;

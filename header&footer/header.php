@@ -196,7 +196,7 @@
             <li class="order-list">
                 <div class="o-image">
                   <img src="<?php echo $row['Pimage']; ?>" alt="">
-                  <p><?php echo $row['Pname']; ?></p>
+                  <p class="product-name"><?php echo $row['Pname']; ?></p>
                 </div>
                 <div class="price">
                   <p>&#8369;<?php echo $row['Pprice']; ?></p>
