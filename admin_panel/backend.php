@@ -336,28 +336,10 @@
         }
         
         public function deleteCart($accountID){
-            $stmt = $this->connection->prepare("SELECT DISTINCT productID FROM `orders` WHERE `accountID`=?");
+            $stmt = $this->connection->prepare("DELETE FROM `cart` WHERE `accountID`=?");
             $stmt->bind_param("i", $accountID);
             $stmt->execute();
-            $result_select = $stmt->get_result();
-        
-            $productIDs = [];
-            while ($row = $result_select->fetch_assoc()) {
-                $productIDs[] = $row['productID'];
-            }
-        
-            if (!empty($productIDs)) {
-
-                $placeholders = implode(',', array_fill(0, count($productIDs), '?'));
-        
-                $stmt = $this->connection->prepare("DELETE FROM `cart` WHERE `PID` IN ($placeholders) AND `accountID`=?");
-                
-                $types = str_repeat('i', count($productIDs) + 1); 
-                $bindParams = array_merge([$types], $productIDs, [$accountID]);
-                call_user_func_array([$stmt, 'bind_param'], $bindParams);
-        
-                $stmt->execute();
-            }
+            $result_select = $stmt->get_result();    
         }
 
     }
