@@ -53,24 +53,19 @@
     $earnings = $query->totalEarning();
     $users = $query->totalUsers();
     
-    $acoustic = 0;
-    $electric = 0;
-    $bass = 0;
-    $ukalele = 0;
-    if ($acoustic = $query->updateSalesChart (1) ||
-        $electric = $query->updateSalesChart (2) ||
-        $bass = $query->updateSalesChart (3) ||
-        $ukalele = $query->updateSalesChart (4)) {
 
-      if ( isset($acoustic) || isset($electric) || isset($bass) || isset($ukalele) ) {
-        $total_catergory = $acoustic + $electric + $bass + $ukalele;
-      }
+    $acoustic = $query->updateSalesChart (1);
+    $electric = $query->updateSalesChart (2);
+    $bass = $query->updateSalesChart (3);
+    $ukalele = $query->updateSalesChart (4);
 
-      $acoustic = ($acoustic / $total_catergory) * 100;
-      $electric = ($electric / $total_catergory) * 100;
-      $bass = ($bass / $total_catergory) * 100;
-      $ukalele = ($ukalele / $total_catergory) * 100;  
-   }
+    $total_catergory = $acoustic + $electric + $bass + $ukalele;
+
+    $acoustic = ($acoustic / $total_catergory) * 100;
+    $electric = ($electric / $total_catergory) * 100;
+    $bass = ($bass / $total_catergory) * 100;
+    $ukalele = ($ukalele / $total_catergory) * 100;  
+   
   
   ?>
 
