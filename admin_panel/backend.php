@@ -149,7 +149,7 @@
         }
 
         public function selectAll($tablename,$id) {
-            $query="SELECT * FROM ".$tablename." WHERE specsID = ?";
+            $query="SELECT * FROM ".$tablename." WHERE productID = ?";
             $stmt =  $this->connection->prepare($query);
             $stmt->bind_param('i',$id);
             $stmt->execute();
@@ -163,7 +163,7 @@
                                                 FROM specs as s
                                                 INNER JOIN products as p
                                                 ON s.productID = p.PID
-                                                WHERE s.specsID = ?");
+                                                WHERE p.PID = ?");
             $stmt->bind_param('i', $id);
             $stmt->execute();
             $results = $stmt->get_result();

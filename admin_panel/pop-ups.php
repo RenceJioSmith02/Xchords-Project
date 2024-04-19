@@ -71,8 +71,6 @@
 
     if (isset($_GET['updateId'])) {
         $id =  $_GET['updateId'];
-        $query = new Queries($connect);
-    
         $print = $query->printUpdateproducts($id);
         
     }
