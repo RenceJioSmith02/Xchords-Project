@@ -569,7 +569,7 @@ td ion-icon {
   background-color: #ddd;
 }
 
-td.description {
+.description {
   width: 60px; 
   white-space: nowrap; 
   overflow: hidden; 
